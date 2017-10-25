@@ -10,13 +10,15 @@ data WithId a = WithId
   {
    id    :: Int64
   ,model :: a
-  }
+  }deriving (Eq,Show)
 
 type UserName = String
 type Email    = String
 type UserId = Int64
+type Tag = String
+type Slug = String
 
---  Register use-case --
+-- Entity for Register use-case --
 
 data Register = Register
   {
@@ -28,8 +30,9 @@ data Register = Register
 data RegisterError
   = RegisterErrorEmailTaken Email
   | RegisterErrorUserNameTaken UserName
+  deriving (Eq,Show)
 
--- Log In use-case --
+-- Entity for Log In use-case --
 
 data Auth = Auth
   {
@@ -40,24 +43,43 @@ data Auth = Auth
 data AuthError
   = AuthErrorBadAuthentication
   | AuthErrorUserNotFound UserName
+  deriving (Eq,Show)
 
 class (Monad m) => UserRepo m where
   register :: Register -> ExceptT RegisterError m ()
   findUserByAuth :: Auth -> m (Maybe (WithId User))
   findUserById :: UserId -> m (Maybe (WithId User))
 
--- Article
+-- Entity for Create Article use-case --
+
+data CreateArticle = CreateArticle
+   {
+     createArticleTitle :: String
+    ,createArticleBody :: String
+    ,createArticleTags :: [Tag]
+    }deriving(Eq,Show)
+
+-- Entity for Update Article use-case --
+
+data UpdateArticle = UpdateArticle
+  {
+    updateArticleTitle :: Maybe String,
+    updateArticleBody :: Maybe String
+  }deriving (Eq,Show)
+
 data Article = Article
   {
     articleTitle :: String
    ,articleBody  :: String
    } deriving (Eq,Show)
 
-data UpdateArticle = UpdateArticle
-  {
-     updateArticleTitle :: Maybe String
-    ,updateArticleBody  :: Maybe String
-  }deriving (Eq,Show)
+data UpdateArticleError
+  = UpdateArticleErrorNotAllowed Slug
+  deriving(Eq,Show)
+
+class (Monad m) => ArticleRepo m where
+  addArticle :: CreateArticle -> Slug -> UserId -> m ()
+  updateArticle :: Slug -> UpdateArticle -> Slug -> m ()
 
 -- User
 data User = User
@@ -73,10 +95,3 @@ data UpdateUser = UpdateUser
     ,updateUserEmail    :: Maybe String
     ,updateUserPassword :: Maybe String
   }deriving (Eq,Show)
-
-
-
-class (Monad m) => ArticleRepo m where
-  addArticle    :: Article -> m ()
-  deleteArticle :: Article -> m ()
-  updateArticle :: UpdateArticle -> m ()
