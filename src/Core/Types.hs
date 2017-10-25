@@ -1,5 +1,14 @@
 module Core.Types where
 
+import Control.Monad.Except
+
+data Register = Register
+  {
+   registerEmail    :: String
+  ,registerUserName :: String
+  ,registerPassword :: String
+  } deriving(Eq,Show)
+
 -- Article
 data Article = Article
   {
@@ -40,4 +49,4 @@ class (Monad m) => ArticleRepo m where
   updateArticle :: UpdateArticle -> m ()
 
 class (Monad m) => UserRepo m where
-  addUser :: User -> m ()
+  addUser :: Register -> ExpcepT UserError m ()
