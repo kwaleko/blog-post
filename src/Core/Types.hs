@@ -7,8 +7,7 @@ import Data.Int(Int64)
 -- General --
 
 data WithId a = WithId
-  {
-   id    :: Int64
+  {id    :: Int64
   ,model :: a
   }deriving (Eq,Show)
 
@@ -21,8 +20,7 @@ type Slug = String
 -- Entity for Register use-case --
 
 data Register = Register
-  {
-   registerEmail    :: String
+  {registerEmail    :: String
   ,registerUserName :: String
   ,registerPassword :: String
   } deriving(Eq,Show)
@@ -35,9 +33,8 @@ data RegisterError
 -- Entity for Log In use-case --
 
 data Auth = Auth
-  {
-     authEmail    :: String
-    ,authPassword :: String
+  {authEmail    :: String
+  ,authPassword :: String
   } deriving(Eq,Show)
 
 data AuthError
@@ -47,24 +44,22 @@ data AuthError
 
 class (Monad m) => UserRepo m where
   register :: Register -> ExceptT RegisterError m ()
-  findUserByAuth :: Auth -> m (Maybe (WithId User))
-  findUserById :: UserId -> m (Maybe (WithId User))
+  --findUserByAuth :: Auth -> m (Maybe (WithId User))
+  --findUserById :: UserId -> m (Maybe (WithId User))
 
 -- Entity for Create Article use-case --
 
 data CreateArticle = CreateArticle
-   {
-     createArticleTitle :: String
-    ,createArticleBody :: String
-    ,createArticleTags :: [Tag]
-    }deriving(Eq,Show)
+   { createArticleTitle :: String
+   ,createArticleBody :: String
+   ,createArticleTags :: [Tag]
+   }deriving(Eq,Show)
 
 -- Entity for Update Article use-case --
 
 data UpdateArticle = UpdateArticle
-  {
-    updateArticleTitle :: Maybe String,
-    updateArticleBody :: Maybe String
+  {updateArticleTitle :: Maybe String
+  ,updateArticleBody :: Maybe String
   }deriving (Eq,Show)
 
 data UpdateArticleError
