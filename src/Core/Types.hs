@@ -67,31 +67,23 @@ data UpdateArticle = UpdateArticle
     updateArticleBody :: Maybe String
   }deriving (Eq,Show)
 
-data Article = Article
-  {
-    articleTitle :: String
-   ,articleBody  :: String
-   } deriving (Eq,Show)
-
 data UpdateArticleError
   = UpdateArticleErrorNotAllowed Slug
   deriving(Eq,Show)
 
+-- Entity for Get Articles use-case --
+data Article = Article
+  {articleSlug :: String
+  ,articleTitle :: String
+  ,articleBody :: String
+  --,articleCreatedAt :: UTCDateTime
+  --,articleUpdatedAt :: UTCDateTime
+  ,articleAuthor :: UserName
+  ,articleTags :: [Tag]
+  }
+
 class (Monad m) => ArticleRepo m where
   addArticle :: CreateArticle -> Slug -> UserId -> m ()
   updateArticle :: Slug -> UpdateArticle -> Slug -> m ()
-
--- User
-data User = User
-  {
-    userUserName :: String
-   ,userEmail    :: String
-   ,userName     :: String
-  } deriving(Eq,Show)
-
-data UpdateUser = UpdateUser
-  {
-     updateUserName     :: Maybe String
-    ,updateUserEmail    :: Maybe String
-    ,updateUserPassword :: Maybe String
-  }deriving (Eq,Show)
+  isArticleOwnedByUser :: UserId -> Slug -> m (Maybe Bool)
+  findArticles :: m [Article]
