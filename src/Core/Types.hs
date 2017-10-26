@@ -64,9 +64,14 @@ data UpdateArticle = UpdateArticle
 
 data UpdateArticleError
   = UpdateArticleErrorNotAllowed Slug
+  | UpdateArticleErrorNotFound Slug
   deriving(Eq,Show)
 
 -- Entity for Get Articles use-case --
+data QueryArticleBy
+  = All
+  | QueryArticleBySlug Slug
+
 data Article = Article
   {articleSlug :: String
   ,articleTitle :: String
@@ -79,6 +84,6 @@ data Article = Article
 
 class (Monad m) => ArticleRepo m where
   addArticle :: CreateArticle -> Slug -> UserId -> m ()
-  updateArticle :: Slug -> UpdateArticle -> Slug -> m ()
+  updateArticleBySlug :: Slug -> UpdateArticle -> Slug -> m ()
   isArticleOwnedByUser :: UserId -> Slug -> m (Maybe Bool)
-  findArticles :: m [Article]
+  findArticles :: QueryArticleBy -> m [Article]

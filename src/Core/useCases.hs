@@ -1,13 +1,22 @@
 module UseCases where
 
+import Control.Monad.Except
 
 import Core.Types as T
 
-createArticle :: (T.ArticleRepo m) => T.Article -> m ()
-createArticle  = T.addArticle
 
-deleteArticle :: (T.ArticleRepo m) => T.Article -> m ()
-deleteArticle = T.deleteArticle
+updateArticle ::
+  (T.ArticleRepo m) =>
+     T.UserId
+  -> T.UpdateArticle
+  -> T.Slug
+  -> ExceptT T.UpdateArticleError m T.Article
+updateArticle userId article slug = undefined
 
-updateArticle :: (T.ArticleRepo m) => T.UpdateArticle -> m ()
-updateArticle = T.updateArticle
+validateArticleOwnedBy :: (T.ArticleRepo m) => T.UserId -> T.Slug  -> ExceptT T.UpdateArticleError m ()
+validateArticleOwnedBy uId slug = do
+  result <-lift $ T.isArticleOwnedByUser uId slug
+  case result of
+    Nothing -> throwError $ T.UpdateArticleErrorNotFound slug
+    (Just False) -> throwError $ T.UpdateArticleErrorNotAllowed slug
+    _ -> return  ()
