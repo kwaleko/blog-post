@@ -3,55 +3,51 @@
 --{-# LANGUAGE OverloadedStrings #-}
 module API where
 
-
-import Data.Int(Int64)
 import Servant.Client
 import Servant.Server
 import Servant.API
 import Data.Aeson
 
 import qualified Core.Types as T
+import qualified Core.ManageUsers as U
 
---type UserApi =
- -- "users" :> Capture "userid" Int :> Get '[JSON] Int
-         --   "api" :> "user" :> Capture "userid" Int :> Get '[JSON] Int
-type UsersAPI =
-       "api" :> "users" :> Capture "userid" Int64 :> Get '[JSON] T.User
-  :<|> "api" :> "users" :> ReqBody '[JSON] T.User :> Post '[JSON] Int64
-  :<|> "api" :> "articles" :> Get '[JSON] [T.Article]
-  :<|> "api" :> "articles" :> ReqBody '[JSON] T.Article :> Post '[JSON] Int64
-  :<|> "api" :> "articles" :> Capture "articleid" Int64 :> Get '[JSON] T.Article
-  :<|> "api" :> "articles" :> Capture "tag" String :> Get '[JSON] [T.Article]
+type API
+   =   UsersAPI
+  :<|> ArticlesAPI
 
-usersAPI :: Proxy UsersAPI
-usersAPI = Proxy :: Proxy UsersAPI
+type UsersAPI
+   =   "api" :> "users" :> "register" :> ReqBody '[JSON] T.Register :> Get '[JSON] T.UserId -- Post /api/users/register
+  :<|> "api" :> "users" :> "login" :> ReqBody '[JSON] T.Auth :> Get '[JSON] T.UserId -- Get /api/users/login
 
-fetchUserHandler :: Int64 -> Handler  T.User
-fetchUserHandler = undefined
+type ArticlesAPI
+  =    "api" :> "articles" :> Capture "userid" T.UserId :> ReqBody '[JSON] T.CreateArticle :> Post '[JSON] T.Article --Post /api/articles/:userid/
+  :<|> "api" :> "articles" :> Capture "slug" T.Slug :> Get '[JSON] T.Article -- Get /api/articles/:slug/
+  :<|> "api" :> "articles" :> Get '[JSON] [T.Articles] -- Get /api/articles/
 
-createUserHandler :: T.User ->Handler Int64
-createUserHandler = undefined
+registerHandler :: T.Register -> Handler T.UserId
+registerHandler usr = lift $ U.register usr
 
-createArticleHandler :: T.Article ->Handler Int64
-createArticleHandler = undefined
+loginHandler :: T.Auth -> Handler T.UserId
+loginHandler  = lift U.login
 
-fetchArticlesHandler :: Handler [T.Article]
-fetchArticlesHandler = undefined
+createArticleHandler :: T.UserId -> T.CreateArticle -> Handler T.Article
+createArticleHandler uId article = lift $ U.createArticle uId article
 
-fetchArticleByIdHandler :: Int64 -> Handler T.Article
-fetchArticleByIdHandler id = undefined
+getArticleHandler :: T.Slug -> Handler T.Article
+getArticleHandler = lift U.getArticle
 
-fetchArticlesByTagHandler :: String -> Handler [T.Article]
-fetchArticlesByTagHandler tag = undefined
+getArticlesHandler :: Handler T.Article
+getArticlesHandler = lift U.getArticles
+--usersAPI :: Proxy UsersAPI
+--usersAPI = Proxy :: Proxy UsersAPI
+server :: Server API
+server
+  = registerHandler
+  :<|> loginHandler
+  :<|> createArticleHandler
+  :<|> getArticleHandler
+  :<|> getArticlesHandler
+  :<|> test
 
-server :: Server UsersAPI
-server=
-  fetchUserHandler         :<|>
-  createUserHandler        :<|>
-  fetchArticlesHandler     :<|>
-  createArticleHandler     :<|>
-  fetchArticleByIdHandler  :<|>
-  fetchArticlesByTagHandler
-
-  runServer :: IO ()
-  runServer = run 8000 (serve usersAPI server)
+appAPI :: Proxy API
+appAPI = Proxy :: Proxy API
