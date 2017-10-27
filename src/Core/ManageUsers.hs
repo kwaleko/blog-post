@@ -21,4 +21,8 @@ checkUserDataForRegister (uName,nFound) (uEmail,eFound)  | nFound = throwError $
                                                          | not  (nFound && eFound)  = return ()
 
 login :: (T.UserRepo m) => T.Auth -> ExceptT T.UserError m T.UserId
-login auth = undefined
+login auth = do
+  result <- lift $ T.findUserByAuth auth
+  case result of
+    Nothing -> throwError T.AuthErrorBadAuthentication
+    (Just userid) -> return userid

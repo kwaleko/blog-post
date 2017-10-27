@@ -26,11 +26,6 @@ data Register = Register
   ,registerPassword :: String
   } deriving(Eq,Show)
 
-data RegisterError
-  = RegisterErrorEmailTaken Email
-  | RegisterErrorUserNameTaken UserName
-  deriving (Eq,Show)
-
 -- Entity for Log In use-case --
 
 data Auth = Auth
@@ -38,14 +33,18 @@ data Auth = Auth
   ,authPassword :: String
   } deriving(Eq,Show)
 
-data AuthError
+data UserError
   = AuthErrorBadAuthentication
   | AuthErrorUserNotFound UserName
+  | RegisterErrorEmailTaken Email
+  | RegisterErrorUserNameTaken UserName
   deriving (Eq,Show)
 
 class (Monad m) => UserRepo m where
-  register :: Register -> ExceptT RegisterError m ()
-  --findUserByAuth :: Auth -> m (Maybe (WithId User))
+  register :: Register -> ExceptT UserError m ()
+  isEmailExists :: Email -> m Bool
+  isUserNameExists :: UserName -> m Bool
+  findUserByAuth :: Auth -> m (Maybe UserId)
   --findUserById :: UserId -> m (Maybe (WithId User))
 
 -- Entity for Create Article use-case --
