@@ -35,7 +35,7 @@ data Auth = Auth
 
 data UserError
   = AuthErrorBadAuthentication
-  | AuthErrorUserNotFound UserName
+   -- | AuthErrorUserNotFound UserName
   | RegisterErrorEmailTaken Email
   | RegisterErrorUserNameTaken UserName
   deriving (Eq,Show)

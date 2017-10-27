@@ -1,4 +1,4 @@
-module UseCases where
+module ManageArticles where
 
 import Control.Monad.Except
 
