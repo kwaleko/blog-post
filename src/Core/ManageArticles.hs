@@ -1,4 +1,4 @@
-module ManageArticles where
+module UseCases where
 
 import Control.Monad.Except
 
@@ -42,3 +42,8 @@ getArticle slug = do
 
 getArticles :: (ArticleRepo m) =>  ExceptT T.ArticleError m [T.Article]
 getArticles = lift $ T.findArticles All
+
+deleteArticle :: (ArticleRepo m) => T.UserId -> T.Slug -> ExceptT T.ArticleError m ()
+deleteArticle uId slug = do
+  validateArticleOwnedBy uId slug
+  lift $ T.deleteArticle slug

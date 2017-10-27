@@ -87,3 +87,4 @@ class (Monad m) => ArticleRepo m where
   updateArticleBySlug :: Slug -> UpdateArticle -> Slug -> m ()
   isArticleOwnedByUser :: UserId -> Slug -> m (Maybe Bool)
   findArticles :: QueryArticleBy -> m [Article]
+  deleteArticle :: Slug -> m ()
