@@ -16,6 +16,7 @@ type Email    = String
 type UserId = Int64
 type Tag = String
 type Slug = String
+type Title = String
 
 -- Entity for Register use-case --
 
@@ -50,7 +51,7 @@ class (Monad m) => UserRepo m where
 -- Entity for Create Article use-case --
 
 data CreateArticle = CreateArticle
-   { createArticleTitle :: String
+   { createArticleTitle :: Title
    ,createArticleBody :: String
    ,createArticleTags :: [Tag]
    }deriving(Eq,Show)
@@ -62,9 +63,9 @@ data UpdateArticle = UpdateArticle
   ,updateArticleBody :: Maybe String
   }deriving (Eq,Show)
 
-data UpdateArticleError
-  = UpdateArticleErrorNotAllowed Slug
-  | UpdateArticleErrorNotFound Slug
+data ArticleError
+  = ArticleErrorNotAllowed Slug
+  | ArticleErrorNotFound Slug
   deriving(Eq,Show)
 
 -- Entity for Get Articles use-case --
