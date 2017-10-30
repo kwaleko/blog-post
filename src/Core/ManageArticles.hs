@@ -1,4 +1,4 @@
-module UseCases where
+module Core.ManageArticles where
 
 import Control.Monad.Except
 
@@ -25,7 +25,7 @@ validateArticleOwnedBy uId slug = do
 -- genSlug should be updated to add datetime with user id to the new slug
 -- in order to prevent the slug to be duplicated. Ex: 12-176844600-my-title-post
 genSlug :: T.Title -> T.Slug
-genSlug title = undefined
+genSlug  = map (\c -> if c == ' ' then '-' else c)
 
 createArticle :: (T.ArticleRepo m) => T.UserId -> T.CreateArticle -> ExceptT T.ArticleError m T.Article
 createArticle uId article = do
