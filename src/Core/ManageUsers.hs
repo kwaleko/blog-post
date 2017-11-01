@@ -1,4 +1,4 @@
-module ManageUsers where
+module Core.ManageUsers where
 
 import Control.Monad.Except
 
@@ -12,7 +12,7 @@ register user = do
   userNameFound <- lift $ T.isUserNameExists  uName
   emailFound <- lift $ T.isEmailExists uEmail
   checkUserDataForRegister (uName,userNameFound) (uEmail,emailFound)
-  T.register user
+  lift $  T.addUser user
   login $ T.Auth uEmail uPass
 
 checkUserDataForRegister :: (T.UserRepo m) => (T.UserName,Bool) -> (T.Email,Bool) -> ExceptT T.UserError m ()
