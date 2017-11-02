@@ -9,11 +9,18 @@ import Data.Attoparsec.Text(endOfLine
                            ,space
                            ,anyChar
                            ,char
+                           ,space
+                           ,notChar
+                           ,skipSpace
+                           ,skipWhile
+                           ,satisfy
                            ,Parser(..)
                            ,parse)
 import Data.Text(pack,Text(..))
 
 import qualified  Core.Types as T
+
+-- parser for article styling --
 
 styling :: Parser [(Text,T.Style)]
 styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt]) endOfLine
@@ -41,14 +48,18 @@ mark :: Parser [(Text,T.Style)]
 mark = between "##" T.Mark
 
 heading :: Parser [(Text,T.Style)]
-heading =  undefined
+heading = do
+  char '\n'
+  title <- manyTill anyChar $ char '\n'
+  manyTill (choice [char '=',space]) (char '\n')
+  return [(pack title,T.Heading)]
 
 url :: Parser [(Text,T.Style)]
 url = do
   char '['
-  urlName <- manyTill anyChar (char ']')
+  urlName <- manyTill anyChar $ char ']'
   char '('
-  url <- manyTill anyChar (char ')')
+  url <- manyTill anyChar $ char ')'
   return [(pack urlName,T.URL url)]
 
 end :: Parser [(Text,T.Style)]
@@ -58,3 +69,8 @@ between :: Text -> T.Style -> Parser [(Text,T.Style)]
 between  parm style = do
   result <- string parm >> manyTill anyChar (string parm)
   return [(pack result,style)]
+
+  -- parse to generate slug --
+
+slugify :: Parser Text
+slugify = undefined
