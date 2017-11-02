@@ -1,4 +1,4 @@
-module Core.ManageArticles where
+module Core.Articles where
 
 import Control.Monad.Except
 

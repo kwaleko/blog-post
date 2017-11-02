@@ -1,4 +1,4 @@
-module Core.ManageUsers where
+module Core.Users where
 
 import Control.Monad.Except
 

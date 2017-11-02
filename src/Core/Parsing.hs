@@ -1,5 +1,5 @@
 {-# Language OverloadedStrings #-}
-module ParseArticle where
+module Parsing where
 
 
 import Data.Attoparsec.Combinator(choice,manyTill,lookAhead)
