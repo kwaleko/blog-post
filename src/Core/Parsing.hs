@@ -1,7 +1,8 @@
 {-# Language OverloadedStrings #-}
 module ParseArticle where
 
-import Data.Attoparsec.Combinator(choice,manyTill)
+
+import Data.Attoparsec.Combinator(choice,manyTill,lookAhead)
 import Data.Attoparsec.Text(endOfLine
                            ,try
                            ,string
@@ -14,44 +15,46 @@ import Data.Text(pack,Text(..))
 
 import qualified  Core.Types as T
 
-styleParser :: Parser [(Text,T.Style)]
-styleParser = choice
-  [
-     endP
-    ,headingP
-    ,italicP
-    ,markP
-    ,urlP
-    ,anyChar >>=\c -> styleParser >>=\cs -> return [(c:cs) fs qq
-  ]
+styling :: Parser [(Text,T.Style)]
+styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt]) endOfLine
 
-parse' :: Parser [(Text,T.Style)]
-parse' =  undefined-- styleParser >>= \c -> anyChar
+styledTxt :: Parser [(Text,T.Style)]
+styledTxt = choice[end
+                  ,heading
+                  ,bold
+                  ,italic
+                  ,mark
+                  ,url]
 
-endP :: Parser [(Text,T.Style)]
-endP = do
-  endOfLine
-  return [("",T.Normal)]
+unstyledTxt :: Parser [(Text,T.Style)]
+unstyledTxt = do
+  result <- manyTill anyChar $ lookAhead styledTxt
+  return [(pack result,T.Normal)]
 
-italicP :: Parser [(Text,T.Style)]
-italicP = do
-  result <- char '*' >> manyTill anyChar (char '*')
-  return [(pack result,T.Italic)]
+bold :: Parser [(Text,T.Style)]
+bold = between "**" T.Bold
 
-headingP :: Parser [(Text,T.Style)]
-headingP = do
-  result <- string (pack "**") >> manyTill anyChar (string (pack "**"))
-  return [(pack result,T.Heading)]
+italic :: Parser [(Text,T.Style)]
+italic = between "*" T.Italic
 
-markP :: Parser [(Text,T.Style)]
-markP = do
-  result <- string (pack "##") >> manyTill anyChar (string (pack "##"))
-  return [(pack result,T.Mark)]
+mark :: Parser [(Text,T.Style)]
+mark = between "##" T.Mark
 
-urlP :: Parser [(Text,T.Style)]
-urlP = do
+heading :: Parser [(Text,T.Style)]
+heading =  undefined
+
+url :: Parser [(Text,T.Style)]
+url = do
   char '['
   urlName <- manyTill anyChar (char ']')
   char '('
   url <- manyTill anyChar (char ')')
   return [(pack urlName,T.URL url)]
+
+end :: Parser [(Text,T.Style)]
+end = endOfLine >> return []
+
+between :: Text -> T.Style -> Parser [(Text,T.Style)]
+between  parm style = do
+  result <- string parm >> manyTill anyChar (string parm)
+  return [(pack result,style)]
