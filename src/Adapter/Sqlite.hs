@@ -63,9 +63,13 @@ findArticles = do
     [] -> return []
     articles -> return $ map sqlToArticle articles
 
-isArticleOwnedByUser :: uId -> slug -> m (Maybe Bool)
-isArticleOwnedByUser = do
+isArticleOwnedByUser :: (MonadIO m,MonadReader r m,IConnection r) => T.UserId -> T.Slug -> m (Maybe Bool)
+isArticleOwnedByUser uId slug = do
   conn <- ask
+  count <- liftIO $ S.countArticleByUser uId slug conn
+  case count of
+    Just 1 -> return $ Just True
+    _ -> return $ Just False
 
 
 sqlToArticle :: (String,String,String,String) -> T.Article
