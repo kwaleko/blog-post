@@ -38,3 +38,35 @@ findUserByAuth usr = do
   let email = T.authEmail usr
   let pwd = T.authPassword usr
   liftIO $ S.getUser email pwd conn
+
+createArticle :: (MonadIO m,MonadReader r m,IConnection r) => T.CreateArticle -> T.Slug -> T.UserId -> m ()
+createArticle article slug uId = do
+  conn <- ask
+  let title = T.createArticleTitle article
+  let body = T.createArticleBody article
+  liftIO $ S.insertArticle title body slug uId conn
+  return ()
+
+findArticle ::(MonadIO m,MonadReader r m,IConnection r) => T.Slug -> m [T.Article]
+findArticle slug = do
+  conn <- ask
+  article <- liftIO $ S.getArticle slug conn
+  case article of
+    Just (title,body,slug,uId) -> return [ T.Article slug title body uId []]
+    _ -> return []
+
+findArticles ::(MonadIO m,MonadReader r m,IConnection r) => m [T.Article]
+findArticles = do
+  conn <- ask
+  articles <- liftIO $ S.getArticles conn
+  case articles of
+    [] -> return []
+    articles -> return $ map sqlToArticle articles
+
+isArticleOwnedByUser :: uId -> slug -> m (Maybe Bool)
+isArticleOwnedByUser = do
+  conn <- ask
+
+
+sqlToArticle :: (String,String,String,String) -> T.Article
+sqlToArticle = undefined
