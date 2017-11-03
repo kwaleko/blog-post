@@ -35,13 +35,12 @@ data Auth = Auth
 
 data UserError
   = AuthErrorBadAuthentication
-   -- | AuthErrorUserNotFound UserName
   | RegisterErrorEmailTaken Email
   | RegisterErrorUserNameTaken UserName
   deriving (Eq,Show)
 
-class (Monad m) => UserRepo m where
-  register :: Register -> ExceptT UserError m ()
+class (MonadIO m) => UserRepo m where
+  addUser :: Register ->  m ()
   isEmailExists :: Email -> m Bool
   isUserNameExists :: UserName -> m Bool
   findUserByAuth :: Auth -> m (Maybe UserId)
@@ -88,3 +87,13 @@ class (Monad m) => ArticleRepo m where
   isArticleOwnedByUser :: UserId -> Slug -> m (Maybe Bool)
   findArticles :: QueryArticleBy -> m [Article]
   deleteArticle :: Slug -> m ()
+
+-- Types related to the Parser module --
+data Style
+  = Normal
+  | Bold
+  | Italic
+  | URL String
+  | Heading
+  | Mark
+  deriving(Eq,Show)
