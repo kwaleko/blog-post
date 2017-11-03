@@ -13,7 +13,7 @@ data WithId a = WithId
 
 type UserName = String
 type Email    = String
-type UserId = Int64
+type UserId = Int
 type Tag = String
 type Slug = String
 type Title = String
