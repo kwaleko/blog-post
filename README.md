@@ -1,6 +1,6 @@
 # A full backend for a blog site
 ## Architecture
-This code is built and organzied to comply with uncle bob architecturer [for more info](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html). the main idea in this architecture is the the main logic does not depend on the the web or on the database or any details. in other main the main logic of the application does not import any database or anything.
+This code is built and organzied to comply with uncle bob architecturer [for more info](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html). the main idea in this architecture is the the main logic does not depend on the the web or on the database or any details. in other words the main logic of the application does not import any database or anything.
 to follow this architecture, the code is divided into two part
   * Core
   * Adapter
@@ -50,4 +50,4 @@ As said before, the main logic of the application is in the [Core folder](https:
  ### REST API
  Servant is used to make REST API
  ### Monadic functions
- all the function are abstracted to use (Monad m) instead of using IO monad or any other specific monad, this case the implemetation could be done used any monad or combination of monad transformer and we don't have to stick to IO.
+The mtl style is used, all the function are abstracted to use (Monad m) instead of using IO monad or any other specific monad, this case the implemetation could be done used any monad or combination of monad transformer and we don't have to stick to IO.
