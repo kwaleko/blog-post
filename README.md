@@ -4,23 +4,24 @@ This code is built and organzied to comply with uncle bob architecturer [for mor
 to follow this architecture, the code is divided into two part
   * Core
   * Adapter
+
 the Core folder contains all the logic and use cases( or bahviour ) of the blog system and does not now anything about the database or the web
 the Adapter folder hold the the implemententation of the database and the REST api.
 ### but why?
-following the above structure, I can change a specific database and plug anoher withouting changing any line of code in the logic of the system
+following the above structure, I can change a specific database and plug anoher without changing any line of code in the logic of the system
 
 ## Functionality
 This is a very simple and minimalistic blog site where the follow can be done :
 - Any user can register to the blog
-- A regsiter User can log in to the blog
+- A regsiter User can log into the blog
 - A logged in User has access to Create a new article
 - A logged in User can update and delete his own articles
 - Anyone can views all articles or Articles by Tags or by slug
 ### REST API
-the functionality is provided through REST API using endpints. Servant is used to serve the API. the API code is availble in the [Adapter/API.hs](https://github.com/kwaleko/blog-post/blob/master/src/Adapter/API.hs)
+the functionality is provided through REST API using endpoints. Servant is used to serve the API. the API code is availble in the [Adapter/API.hs](https://github.com/kwaleko/blog-post/blob/master/src/Adapter/API.hs)
 
 ### Parsing for styling
-The blog provide a parsing libray for styling the code, almost close to the to the way it is done on stackoverflow and reddit where
+The blog provide a parsing libray for styling the article, almost close to the to the way it is done on stackoverflow and reddit where
 - Text between doubte start is Bold.
 - Text between two single star is italic.
 - Text betwee two ## is higlighted .
@@ -36,7 +37,7 @@ The Database for this bog is very simple and it is implmeneted using SQLite. two
 As said before, the main logic of the application is in the [Core folder](https://github.com/kwaleko/blog-post/tree/master/src/Core) which contain the follwoing use-case:
 - Mange article use-case
 - Manage users use-case
-- Parsing use-case
+- Parsing artilce use-case
 - Monadic interface as classes to be implemented by the DB
 
 ## Technicals
