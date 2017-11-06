@@ -72,6 +72,7 @@ code :: Parser [(Text,T.Style)]
 code = do
   fourSpaces
   txt <- manyTill anyChar $ char '\n'
+  char '\n'
   return [(pack txt,T.Code)]
 
 between :: Text -> T.Style -> Parser [(Text,T.Style)]
@@ -80,9 +81,14 @@ between  parm style = do
   return [(pack result,style)]
 
 fourSpaces :: Parser ()
-fourSpaces = undefined
+fourSpaces = do
+  space
+  space
+  space
+  space
+  return ()
 
-  -- parse to generate slug --
+-- parse to generate slug --
 
 slugify :: Parser [Text]
 slugify = manyTill (choice[skipSpaces,tillSpace]) end
