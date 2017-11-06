@@ -2,7 +2,9 @@
 module Parsing where
 
 
-import Data.Attoparsec.Combinator(choice,manyTill,lookAhead)
+import Data.Attoparsec.Combinator(choice
+                                 ,manyTill
+                                 ,lookAhead)
 import Data.Attoparsec.Text(endOfLine
                            ,try
                            ,string
@@ -27,6 +29,7 @@ styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt]) endOfLine
 
 styledTxt :: Parser [(Text,T.Style)]
 styledTxt = choice[end
+                  ,code
                   ,heading
                   ,bold
                   ,italic
@@ -65,12 +68,34 @@ url = do
 end :: Parser [(Text,T.Style)]
 end = endOfLine >> return []
 
+code :: Parser [(Text,T.Style)]
+code = do
+  fourSpaces
+  txt <- manyTill anyChar $ char '\n'
+  return [(pack txt,T.Code)]
+
 between :: Text -> T.Style -> Parser [(Text,T.Style)]
 between  parm style = do
   result <- string parm >> manyTill anyChar (string parm)
   return [(pack result,style)]
 
+fourSpaces :: Parser ()
+fourSpaces = undefined
+
   -- parse to generate slug --
 
-slugify :: Parser Text
-slugify = undefined
+slugify :: Parser [Text]
+slugify = manyTill (choice[skipSpaces,tillSpace]) end
+
+tillSpace :: Parser Text
+tillSpace = do
+  str <- manyTill anyChar $ choice[endOfLine >> return [],space >> return []]
+  return $ pack str
+
+skipSpaces :: Parser Text
+skipSpaces = do
+  manyTill space $ choice[endOfLine >> return [],lookAhead notSpace >> return []]
+  return $ pack []
+
+notSpace :: Parser Char
+notSpace = satisfy ( /= ' ')

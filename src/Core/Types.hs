@@ -96,4 +96,5 @@ data Style
   | URL String
   | Heading
   | Mark
+  | Code
   deriving(Eq,Show)
