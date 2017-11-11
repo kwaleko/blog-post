@@ -1,22 +1,17 @@
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
 module Core.Types where
 
-import Control.Monad.Except
-import Data.Maybe
-import Data.Int(Int64)
+import Elm
+import GHC.Generics
 
--- General --
-
-data WithId a = WithId
-  {id    :: Int64
-  ,model :: a
-  }deriving (Eq,Show)
 
 type UserName = String
 type Email    = String
-type UserId = Int
-type Tag = String
-type Slug = String
-type Title = String
+type UserId   = Int
+type Tag      = String
+type Slug     = String
+type Title    = String
 
 -- Entity for Register use-case --
 
@@ -24,42 +19,35 @@ data Register = Register
   {registerEmail    :: String
   ,registerUserName :: String
   ,registerPassword :: String
-  } deriving(Eq,Show)
+  } deriving(Eq,Show,Generic,ElmType)
 
 -- Entity for Log In use-case --
 
 data Auth = Auth
   {authEmail    :: String
   ,authPassword :: String
-  } deriving(Eq,Show)
+  } deriving(Eq,Show,Generic,ElmType)
 
 data UserError
   = AuthErrorBadAuthentication
   | RegisterErrorEmailTaken Email
   | RegisterErrorUserNameTaken UserName
-  deriving (Eq,Show)
-
-class (MonadIO m) => UserRepo m where
-  addUser :: Register ->  m ()
-  isEmailExists :: Email -> m Bool
-  isUserNameExists :: UserName -> m Bool
-  findUserByAuth :: Auth -> m (Maybe UserId)
-  --findUserById :: UserId -> m (Maybe (WithId User))
+  deriving (Eq,Show,Generic,ElmType)
 
 -- Entity for Create Article use-case --
 
 data CreateArticle = CreateArticle
    { createArticleTitle :: Title
-   ,createArticleBody :: String
-   ,createArticleTags :: [Tag]
-   }deriving(Eq,Show)
+   ,createArticleBody   :: String
+   ,createArticleTags   :: [Tag]
+   }deriving(Eq,Show,Generic,ElmType)
 
 -- Entity for Update Article use-case --
 
 data UpdateArticle = UpdateArticle
   {updateArticleTitle :: Maybe String
-  ,updateArticleBody :: Maybe String
-  }deriving (Eq,Show)
+  ,updateArticleBody  :: Maybe String
+  }deriving (Eq,Show,Generic,ElmType)
 
 data ArticleError
   = ArticleErrorNotAllowed Slug
@@ -67,9 +55,6 @@ data ArticleError
   deriving(Eq,Show)
 
 -- Entity for Get Articles use-case --
-data QueryArticleBy
-  = All
-  | QueryArticleBySlug Slug
 
 data Article = Article
   {articleSlug :: String
@@ -79,16 +64,13 @@ data Article = Article
   --,articleUpdatedAt :: UTCDateTime
   ,articleAuthor :: UserName
   ,articleTags :: [Tag]
-  }
-
-class (Monad m) => ArticleRepo m where
-  addArticle :: CreateArticle -> Slug -> UserId -> m ()
-  updateArticleBySlug :: Slug -> UpdateArticle -> Slug -> m ()
-  isArticleOwnedByUser :: UserId -> Slug -> m (Maybe Bool)
-  findArticles :: QueryArticleBy -> m [Article]
-  deleteArticle :: Slug -> m ()
+  } deriving (Eq,Show,Generic,ElmType)
 
 -- Types related to the Parser module --
+data QueryArticleBy
+  = All
+  | QueryArticleBySlug Slug
+
 data Style
   = Normal
   | Bold
