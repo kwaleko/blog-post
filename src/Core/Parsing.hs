@@ -3,34 +3,21 @@
 module Parsing where
 
 
-import Data.Attoparsec.Combinator(choice
-                                 ,manyTill
-                                 ,lookAhead)
-import Data.Attoparsec.Text(endOfLine
-                           ,try
-                           ,string
-                           ,space
-                           ,anyChar
+import Data.Attoparsec.Combinator(choice,manyTill,lookAhead)
+import Data.Attoparsec.Text(anyChar
                            ,char
+                           ,endOfLine
                            ,space
-                           ,notChar
-                           ,skipSpace
-                           ,skipWhile
-                           ,satisfy
-                           ,many1
-                           ,Parser(..)
-                           ,parse
+                           ,string
                            ,parseOnly
-                           ,feed)
-import Data.Text.Internal
+                           ,Parser(..))
 import Data.Text hiding(concat)
 
 import qualified  Core.Types as T
 
--- parser for article styling --
-
 styling :: Parser [(Text,T.Style)]
 styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt])  end
+
 styledTxt :: Parser [(Text,T.Style)]
 styledTxt = choice[code
                   ,heading
@@ -70,7 +57,9 @@ url = do
   return [(pack urlName,T.URL url)]
 
 end :: Parser [(Text,T.Style)]
-end = string "EOA" >> return []
+end = do
+  string "EOA"
+  return []
 
 code :: Parser [(Text,T.Style)]
 code = do
@@ -79,11 +68,11 @@ code = do
   newLine
   return [(pack code,T.Code)]
 
-between :: Text -> T.Style -> Parser [(Text,T.Style)]
-between   parm style =  undefined -- do
+between :: String -> T.Style -> Parser [(Text,T.Style)]
+between   parm style =  undefined-- do
  -- string  parm
  -- txt <- manyTill anyChar  $ string parm
- -- return [(pack txt,style)]
+  --return [(pack txt,style)]
 
 fourSpaces :: Parser ()
 fourSpaces = do
