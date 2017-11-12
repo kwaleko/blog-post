@@ -57,13 +57,13 @@ data ArticleError
 -- Entity for Get Articles use-case --
 
 data Article = Article
-  {articleSlug :: String
-  ,articleTitle :: String
-  ,articleBody :: String
+  {articleSlug      :: String
+  ,articleTitle     :: String
+  ,articleBody      :: String
   --,articleCreatedAt :: UTCDateTime
   --,articleUpdatedAt :: UTCDateTime
-  ,articleAuthor :: UserName
-  ,articleTags :: [Tag]
+  ,articleAuthor    :: UserName
+  ,articleTags      :: [Tag]
   } deriving (Eq,Show,Generic,ElmType)
 
 -- Types related to the Parser module --
