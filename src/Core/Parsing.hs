@@ -1,4 +1,5 @@
 {-# Language OverloadedStrings #-}
+
 module Parsing where
 
 
@@ -16,25 +17,28 @@ import Data.Attoparsec.Text(endOfLine
                            ,skipSpace
                            ,skipWhile
                            ,satisfy
+                           ,many1
                            ,Parser(..)
-                           ,parse)
-import Data.Text(pack,Text(..))
+                           ,parse
+                           ,parseOnly
+                           ,feed)
+import Data.Text.Internal
+import Data.Text hiding(concat)
 
 import qualified  Core.Types as T
 
 -- parser for article styling --
 
 styling :: Parser [(Text,T.Style)]
-styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt]) endOfLine
-
+styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt])  end
 styledTxt :: Parser [(Text,T.Style)]
-styledTxt = choice[end
-                  ,code
+styledTxt = choice[code
                   ,heading
                   ,bold
                   ,italic
                   ,mark
-                  ,url]
+                  ,url
+                  ,end]
 
 unstyledTxt :: Parser [(Text,T.Style)]
 unstyledTxt = do
@@ -52,33 +56,34 @@ mark = between "##" T.Mark
 
 heading :: Parser [(Text,T.Style)]
 heading = do
-  char '\n'
-  title <- manyTill anyChar $ char '\n'
-  manyTill (choice [char '=',space]) (char '\n')
+  newLine
+  title <- manyTill anyChar newLine
+  manyTill spaceOrEqual newLine
   return [(pack title,T.Heading)]
 
 url :: Parser [(Text,T.Style)]
 url = do
-  char '['
-  urlName <- manyTill anyChar $ char ']'
-  char '('
-  url <- manyTill anyChar $ char ')'
+  oSquareBracket
+  urlName <- manyTill anyChar cSquareBracket
+  oRoundBracket
+  url <- manyTill anyChar cRoundBracket
   return [(pack urlName,T.URL url)]
 
 end :: Parser [(Text,T.Style)]
-end = endOfLine >> return []
+end = string "EOA" >> return []
 
 code :: Parser [(Text,T.Style)]
 code = do
   fourSpaces
-  txt <- manyTill anyChar $ char '\n'
-  char '\n'
-  return [(pack txt,T.Code)]
+  code <- manyTill anyChar newLine
+  newLine
+  return [(pack code,T.Code)]
 
 between :: Text -> T.Style -> Parser [(Text,T.Style)]
-between  parm style = do
-  result <- string parm >> manyTill anyChar (string parm)
-  return [(pack result,style)]
+between   parm style =  undefined -- do
+ -- string  parm
+ -- txt <- manyTill anyChar  $ string parm
+ -- return [(pack txt,style)]
 
 fourSpaces :: Parser ()
 fourSpaces = do
@@ -88,20 +93,20 @@ fourSpaces = do
   space
   return ()
 
--- parse to generate slug --
+newLine :: Parser Char
+newLine = char '\n'
 
-slugify :: Parser [Text]
-slugify = manyTill (choice[skipSpaces,tillSpace]) end
+spaceOrEqual :: Parser Char
+spaceOrEqual = choice [char '=',space]
 
-tillSpace :: Parser Text
-tillSpace = do
-  str <- manyTill anyChar $ choice[endOfLine >> return [],space >> return []]
-  return $ pack str
+oSquareBracket :: Parser Char
+oSquareBracket = char '['
 
-skipSpaces :: Parser Text
-skipSpaces = do
-  manyTill space $ choice[endOfLine >> return [],lookAhead notSpace >> return []]
-  return $ pack []
+oRoundBracket :: Parser Char
+oRoundBracket = char '('
 
-notSpace :: Parser Char
-notSpace = satisfy ( /= ' ')
+cRoundBracket :: Parser Char
+cRoundBracket = char ')'
+
+cSquareBracket :: Parser Char
+cSquareBracket = char ']'
