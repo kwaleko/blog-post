@@ -1,0 +1,13 @@
+Configuring formatting-6.2.5...
+Building formatting-6.2.5...
+Preprocessing library formatting-6.2.5...
+[1 of 7] Compiling Formatting.Internal ( src/Formatting/Internal.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting/Internal.o )
+[2 of 7] Compiling Formatting.Formatters ( src/Formatting/Formatters.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting/Formatters.o )
+[3 of 7] Compiling Formatting.ShortFormatters ( src/Formatting/ShortFormatters.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting/ShortFormatters.o )
+[4 of 7] Compiling Formatting.Time  ( src/Formatting/Time.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting/Time.o )
+[5 of 7] Compiling Formatting       ( src/Formatting.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting.o )
+[6 of 7] Compiling Formatting.Clock ( src/Formatting/Clock.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting/Clock.o )
+[7 of 7] Compiling Formatting.Examples ( src/Formatting/Examples.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Formatting/Examples.o )
+Installing library in
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/formatting-6.2.5-IJLjjLqV10b4J4JySQCvgg
+Registering formatting-6.2.5...

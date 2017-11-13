@@ -1,0 +1,51 @@
+Configuring HDBC-sqlite3-2.3.3.0...
+Building HDBC-sqlite3-2.3.3.0...
+Preprocessing library HDBC-sqlite3-2.3.3.0...
+[1 of 7] Compiling Database.HDBC.Sqlite3.Types ( Database/HDBC/Sqlite3/Types.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Types.o )
+[2 of 7] Compiling Database.HDBC.Sqlite3.Utils ( .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Utils.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Utils.o )
+[3 of 7] Compiling Database.HDBC.Sqlite3.Statement ( .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Statement.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Statement.o )
+[4 of 7] Compiling Database.HDBC.Sqlite3.Consts ( .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Consts.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Consts.o )
+[5 of 7] Compiling Database.HDBC.Sqlite3.ConnectionImpl ( Database/HDBC/Sqlite3/ConnectionImpl.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/ConnectionImpl.o )
+[6 of 7] Compiling Database.HDBC.Sqlite3.Connection ( Database/HDBC/Sqlite3/Connection.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Database/HDBC/Sqlite3/Connection.o )
+
+Database/HDBC/Sqlite3/Connection.hs:81:1: error:
+    • Non type-variable argument
+        in the constraint: convertible-1.1.1.0:Data.Convertible.Base.Convertible
+                             SqlValue a
+      (Use FlexibleContexts to permit this)
+    • When checking the inferred type
+        fgettables :: forall a.
+                      convertible-1.1.1.0:Data.Convertible.Base.Convertible SqlValue a =>
+                      Sqlite3 -> ChildList -> IO [a]
+
+Database/HDBC/Sqlite3/Connection.hs:94:6: error:
+    • Non type-variable argument
+        in the constraint: convertible-1.1.1.0:Data.Convertible.Base.Convertible
+                             SqlValue t
+      (Use FlexibleContexts to permit this)
+    • When checking the inferred type
+        describeCol :: forall t.
+                       convertible-1.1.1.0:Data.Convertible.Base.Convertible SqlValue t =>
+                       [SqlValue] -> (t, SqlColDesc)
+      In an equation for ‘fdescribeTable’:
+          fdescribeTable o mchildren name
+            = do { sth <- newSth o mchildren True
+                          $ "PRAGMA table_info(" ++ name ++ ")";
+                   execute sth [];
+                   res1 <- fetchAllRows' sth;
+                   .... }
+            where
+                describeCol (_ : name : typ : notnull : df : pk : _)
+                  = (fromSql name, describeType typ notnull df pk)
+                describeType name notnull df pk
+                  = SqlColDesc
+                      (typeId name) Nothing Nothing Nothing (nullable notnull)
+                nullable SqlNull = Nothing
+                nullable (SqlString "0") = Just True
+                nullable (SqlString "1") = Just False
+                nullable _ = Nothing
+                typeId SqlNull = SqlUnknownT "Any"
+                typeId (SqlString t) = typeId' t
+                typeId (SqlByteString t) = typeId' $ BUTF8.toString t
+                typeId _ = SqlUnknownT "Unknown"
+                ....

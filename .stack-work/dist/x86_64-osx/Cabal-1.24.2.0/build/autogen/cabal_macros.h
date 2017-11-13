@@ -7,12 +7,96 @@
   (major1) == 0 && (major2) <  1 || \
   (major1) == 0 && (major2) == 1 && (minor) <= 0)
 
+/* package HDBC-2.4.0.2 */
+#define VERSION_HDBC "2.4.0.2"
+#define MIN_VERSION_HDBC(major1,major2,minor) (\
+  (major1) <  2 || \
+  (major1) == 2 && (major2) <  4 || \
+  (major1) == 2 && (major2) == 4 && (minor) <= 0)
+
+/* package HDBC-sqlite3-2.3.3.1 */
+#define VERSION_HDBC_sqlite3 "2.3.3.1"
+#define MIN_VERSION_HDBC_sqlite3(major1,major2,minor) (\
+  (major1) <  2 || \
+  (major1) == 2 && (major2) <  3 || \
+  (major1) == 2 && (major2) == 3 && (minor) <= 3)
+
+/* package aeson-1.1.2.0 */
+#define VERSION_aeson "1.1.2.0"
+#define MIN_VERSION_aeson(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  1 || \
+  (major1) == 1 && (major2) == 1 && (minor) <= 2)
+
+/* package attoparsec-0.13.2.0 */
+#define VERSION_attoparsec "0.13.2.0"
+#define MIN_VERSION_attoparsec(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  13 || \
+  (major1) == 0 && (major2) == 13 && (minor) <= 2)
+
 /* package base-4.9.1.0 */
 #define VERSION_base "4.9.1.0"
 #define MIN_VERSION_base(major1,major2,minor) (\
   (major1) <  4 || \
   (major1) == 4 && (major2) <  9 || \
   (major1) == 4 && (major2) == 9 && (minor) <= 1)
+
+/* package bytestring-0.10.8.1 */
+#define VERSION_bytestring "0.10.8.1"
+#define MIN_VERSION_bytestring(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  10 || \
+  (major1) == 0 && (major2) == 10 && (minor) <= 8)
+
+/* package elm-export-0.6.0.1 */
+#define VERSION_elm_export "0.6.0.1"
+#define MIN_VERSION_elm_export(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  6 || \
+  (major1) == 0 && (major2) == 6 && (minor) <= 0)
+
+/* package mtl-2.2.1 */
+#define VERSION_mtl "2.2.1"
+#define MIN_VERSION_mtl(major1,major2,minor) (\
+  (major1) <  2 || \
+  (major1) == 2 && (major2) <  2 || \
+  (major1) == 2 && (major2) == 2 && (minor) <= 1)
+
+/* package servant-0.11 */
+#define VERSION_servant "0.11"
+#define MIN_VERSION_servant(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  11 || \
+  (major1) == 0 && (major2) == 11 && (minor) <= 0)
+
+/* package servant-client-0.11 */
+#define VERSION_servant_client "0.11"
+#define MIN_VERSION_servant_client(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  11 || \
+  (major1) == 0 && (major2) == 11 && (minor) <= 0)
+
+/* package servant-server-0.11 */
+#define VERSION_servant_server "0.11"
+#define MIN_VERSION_servant_server(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  11 || \
+  (major1) == 0 && (major2) == 11 && (minor) <= 0)
+
+/* package text-1.2.2.2 */
+#define VERSION_text "1.2.2.2"
+#define MIN_VERSION_text(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  2 || \
+  (major1) == 1 && (major2) == 2 && (minor) <= 2)
+
+/* package yeshql-3.0.1.3 */
+#define VERSION_yeshql "3.0.1.3"
+#define MIN_VERSION_yeshql(major1,major2,minor) (\
+  (major1) <  3 || \
+  (major1) == 3 && (major2) <  0 || \
+  (major1) == 3 && (major2) == 0 && (minor) <= 1)
 
 /* tool alex-3.2.1 */
 #define TOOL_VERSION_alex "3.2.1"
@@ -84,7 +168,7 @@
   (major1) == 0 && (major2) <  29 || \
   (major1) == 0 && (major2) == 29 && (minor) <= 2)
 
-#define CURRENT_COMPONENT_ID "blog-post-0.1.0.0-81bqgJ7KsX08f8RVJVuNeA"
+#define CURRENT_COMPONENT_ID "blog-post-0.1.0.0-JbBQx8tJEi5DWEUxOcYyv3"
 
-#define CURRENT_PACKAGE_KEY "blog-post-0.1.0.0-81bqgJ7KsX08f8RVJVuNeA"
+#define CURRENT_PACKAGE_KEY "blog-post-0.1.0.0-JbBQx8tJEi5DWEUxOcYyv3"
 

@@ -1,0 +1,33 @@
+Configuring elm-export-0.6.0.1...
+Building elm-export-0.6.0.1...
+Preprocessing library elm-export-0.6.0.1...
+[1 of 7] Compiling Elm.Type         ( src/Elm/Type.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/Type.o )
+[2 of 7] Compiling Elm.File         ( src/Elm/File.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/File.o )
+[3 of 7] Compiling Elm.Common       ( src/Elm/Common.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/Common.o )
+[4 of 7] Compiling Elm.Decoder      ( src/Elm/Decoder.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/Decoder.o )
+
+src/Elm/Decoder.hs:40:3: warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘render’:
+        Patterns not matched: (MultipleConstructors _)
+
+src/Elm/Decoder.hs:48:3: warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘render’: Patterns not matched: ElmEmpty
+[5 of 7] Compiling Elm.Encoder      ( src/Elm/Encoder.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/Encoder.o )
+
+src/Elm/Encoder.hs:37:3: warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘render’:
+        Patterns not matched:
+            (NamedConstructor _ _)
+            (MultipleConstructors _)
+
+src/Elm/Encoder.hs:42:3: warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘render’: Patterns not matched: ElmEmpty
+[6 of 7] Compiling Elm.Record       ( src/Elm/Record.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/Record.o )
+[7 of 7] Compiling Elm              ( src/Elm.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm.o )
+Installing library in
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/elm-export-0.6.0.1-ApVNAICmooMHAFz6rP1Y4P
+Registering elm-export-0.6.0.1...
