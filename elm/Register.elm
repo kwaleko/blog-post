@@ -3,27 +3,30 @@ import Html exposing (..)
 import Html.Events exposing(..)
 import Html.Attributes exposing(value,placeholder)
 import Http
-import Json.Decode as Decode exposing (..)
-import Json.Encode as Encode exposing (..)
+
+
+import Types exposing (Register,postApiUsersRegister)
 
 
 type alias Model
     = {
         username : String
+       ,email : String
        ,password : String
-       ,userid : String
-       ,errorMsg : String
+       ,error : Maybe String
+       ,userid : Maybe Int
     }
 
 init : (Model, Cmd Msg)
-init = ( Model "" "" "" "",Cmd.none)
+init = (Model "" "" "" Nothing Nothing,Cmd.none)
 
 type Msg =
     NoOp
    | SetUserName String
+   | SetEmail String
    | SetPassword String
-   | SubmitForm
-   | RegisterCompleted (Result Http.Error String)
+   | SignUp
+   | RegisterCompleted (Result Http.Error Int)
 
 url : String
 url = "https://e2ecd374-efa7-4edd-ae58-3ca2b9b72867.mock.pstmn.io/api/users/register"
@@ -32,53 +35,41 @@ update : Msg -> Model -> (Model,Cmd Msg)
 update msg model
     = case msg of
           NoOp -> (model,Cmd.none)
-          SetUserName newUserName -> ({ model | username = newUserName },Cmd.none)
-          SetPassword newPass -> ({model | password = newPass},Cmd.none)
-          SubmitForm -> (model ,authUserCmd model url)
-          RegisterCompleted (Ok newUserId) -> ({model | userid = newUserId },Cmd.none)
-          RegisterCompleted (Err newError) -> ({model | errorMsg = ( toString newError) },Cmd.none)
-         -- _ -> (model,Cmd.none)
-
+          SetPassword pass -> ({model | password = pass },Cmd.none)
+          SetUserName uName -> ({model | username = uName},Cmd.none)
+          SetEmail uEmail -> ({model | email = uEmail},Cmd.none)
+          RegisterCompleted (Ok uId) -> ({model | userid = Just uId},Cmd.none)
+          RegisterCompleted (Err message) -> ({model | error = Just (toString message)},Cmd.none)
+          SignUp -> (model,registerCmd (Register model.username model.email model.password))
 
 
 view : Model -> Html Msg
-view model = div [][
-        span [][text "Register Form"]
-        , br [][]
-        ,input [placeholder "write your usename",Html.Attributes.value  model.username , onInput SetUserName][]
-        , br [][]
-        ,input [placeholder "write your Password", Html.Attributes.value model.password, onInput SetPassword][]
-        ,br [][]
-        ,button [onClick SubmitForm][text "Register"]
-         , p [][text ( toString model.userid)]
-       ]
-
--- encode Register data from elm type to JSON
-userEncoder : Model -> Encode.Value
-userEncoder model =
-    Encode.object
-        [ ("username", Encode.string model.username)
-        , ("password", Encode.string model.password)
-        ]
-
--- decode JSON data to user id
-userIdDecoder : Decoder String
-userIdDecoder =
-    Decode.field "userid" Decode.string
-
-authUser : Model -> String -> Http.Request String
-authUser model apiUrl =
+view model =
     let
-        body =
-            model
-                |> userEncoder
-                |> Http.jsonBody
+       message = case model.error of
+            Nothing -> ""
+            Just error -> error
     in
-        Http.post apiUrl body userIdDecoder
+    div[][
+        h3 [][text "Register"]
+       ,br [][]
+       , input [onInput SetUserName,placeholder "choose a username"][]
+       , br [][]
+       ,input [onInput SetEmail,placeholder "write your email" ][]
+       ,br [][]
+       ,input [onInput SetPassword ,placeholder "write your password"][]
+       ,br [][]
+       , button [onClick SignUp][text "Sign Up"]
+       ,div [][text message]
+             ]
 
-authUserCmd : Model -> String -> Cmd Msg
-authUserCmd model apiUrl =
-    Http.send RegisterCompleted (authUser model apiUrl)
+
+
+registerCmd : Register  -> Cmd Msg
+registerCmd credential =
+    Http.send RegisterCompleted (postApiUsersRegister credential)
+
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
