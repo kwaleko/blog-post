@@ -7,6 +7,21 @@ import Http
 import String
 
 
+type alias Session =
+    { sessionId : Int
+    }
+
+encodeSession : Session -> Json.Encode.Value
+encodeSession x =
+    Json.Encode.object
+        [ ( "sessionId", Json.Encode.int x.sessionId )
+        ]
+
+decodeSession : Decoder Session
+decodeSession =
+    decode Session
+        |> required "sessionId" int
+
 type alias Register =
     { registerEmail : String
     , registerUserName : String
