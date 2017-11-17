@@ -1,4 +1,4 @@
-module Register exposing (..)
+module Login exposing (..)
 import Html exposing (..)
 import Html.Events exposing(..)
 import Html.Attributes exposing(value,placeholder)
@@ -7,7 +7,7 @@ import Navigation exposing (load)
 
 
 
-import Types exposing (Register,Session,postApiUsersRegister,encodeSession)
+import Types exposing (Auth,Session,getApiUsersLogin,encodeSession)
 import Ports exposing (storeToken)
 
 type alias Model
@@ -26,10 +26,9 @@ init = (Model "" "" "" Nothing Nothing,Cmd.none)
 type Msg =
     NoOp
    | SetUserName String
-   | SetEmail String
    | SetPassword String
-   | SignUp
-   | RegisterCompleted (Result Http.Error Int)
+   | Login
+   | LoginAttempt (Result Http.Error Int)
 
 
 update : Msg -> Model -> (Model,Cmd Msg)
@@ -38,10 +37,9 @@ update msg model
           NoOp -> (model,Cmd.none)
           SetPassword pass -> ({model | password = pass },Cmd.none)
           SetUserName uName -> ({model | username = uName},Cmd.none)
-          SetEmail uEmail -> ({model | email = uEmail},Cmd.none)
-          RegisterCompleted (Ok uId) -> ({model | userid = Just uId}, Cmd.batch [uId |> Just |>storeToken,load "http://localhost:8000/index.html"] )
-          RegisterCompleted (Err message) -> ({model | error = Just (toString message)},Cmd.none)
-          SignUp -> (model,registerCmd (Register model.username model.email model.password))
+          LoginAttempt (Ok uId) -> ({model | userid = Just uId}, Cmd.batch [uId |> Just |>storeToken,load "http://localhost:8000/index.html"] )
+          LoginAttempt (Err message) -> ({model | error = Just (toString message)},Cmd.none)
+          Login -> (model,registerCmd (Auth model.username  model.password))
 
 
 view : Model -> Html Msg
@@ -54,21 +52,19 @@ view model =
     div[][
         h3 [][text "Register"]
        ,br [][]
-       , input [onInput SetUserName,placeholder "choose a username"][]
-       , br [][]
-       ,input [onInput SetEmail,placeholder "write your email" ][]
+       , input [onInput SetUserName,placeholder "write your username"][]
        ,br [][]
        ,input [onInput SetPassword ,placeholder "write your password"][]
        ,br [][]
-       , button [onClick SignUp][text "Sign Up"]
+       , button [onClick Login][text "Log In"]
        ,div [][text message]
              ]
 
 
 
-registerCmd : Register  -> Cmd Msg
+registerCmd : Auth  -> Cmd Msg
 registerCmd credential =
-    Http.send RegisterCompleted (postApiUsersRegister credential)
+    Http.send LoginAttempt (getApiUsersLogin credential)
 
 
 subscriptions : Model -> Sub Msg

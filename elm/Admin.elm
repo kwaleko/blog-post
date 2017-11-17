@@ -4,9 +4,11 @@ import Html.Events exposing(..)
 import Html.Attributes exposing(value,placeholder)
 import Http
 
-
-
-import Types exposing (CreateArticle,Article ,postApiArticlesByUserid)
+import Ports exposing (clearToken)
+import Types exposing (Article
+                      ,CreateArticle
+                      ,postApiArticlesByUserid
+                      ,encodeSession)
 
 
 type alias Model
@@ -28,6 +30,7 @@ type Msg =
    | SetTags String
    | SubmitArticle
    | ArticleSubmitted (Result Http.Error Article)
+   | Logout
 
 url : String
 url = "https://e2ecd374-efa7-4edd-ae58-3ca2b9b72867.mock.pstmn.io/api/users/register"
@@ -42,6 +45,7 @@ update msg model
           SetTags tags -> (model,Cmd.none)
           ArticleSubmitted (Ok _) -> (model,Cmd.none)
           ArticleSubmitted (Err message) -> ({model | error = Just (toString message)},Cmd.none)
+          Logout -> (model,clearToken "userid")
 
 
 
@@ -64,7 +68,6 @@ view model =
        , button [onClick SubmitArticle][text "Submit"]
        ,div [][text message]
              ]
-
 
 
 addArticleCmd : Int -> CreateArticle  -> Cmd Msg
