@@ -4,6 +4,7 @@ import qualified Adapter.SQL as S
 import qualified Core.Types  as T
 
 import Control.Monad.Reader
+import Database.HDBC(commit)
 import Database.HDBC.Types(IConnection)
 import Database.HDBC.Sqlite3(Connection(..))
 
@@ -30,6 +31,7 @@ register usr = do
   let uEmail = T.registerEmail usr
   let uPass =  T.registerPassword usr
   liftIO $ S.insertUser uName uEmail uPass conn
+  liftIO $ commit conn
   return ()
 
 findUserByAuth ::(MonadIO m,MonadReader r m,IConnection r) => T.Auth -> m (Maybe T.UserId)
@@ -45,6 +47,8 @@ createArticle article slug uId = do
   let title = T.createArticleTitle article
   let body = T.createArticleBody article
   liftIO $ S.insertArticle title body slug uId conn
+  liftIO $ commit conn
+  --liftIO $ disconnect conn
   return ()
 
 findArticle ::(MonadIO m,MonadReader r m,IConnection r) => T.Slug -> m [T.Article]
@@ -52,8 +56,8 @@ findArticle slug = do
   conn <- ask
   article <- liftIO $ S.getArticle slug conn
   case article of
-    Just (title,body,slug,uId) -> return [ T.Article slug title body uId []]
-    _ -> return []
+    Nothing ->return []
+    Just (title,body,slug,uId) -> return [ T.Article slug title body "" []]
 
 findArticles ::(MonadIO m,MonadReader r m,IConnection r) => m [T.Article]
 findArticles = do
@@ -73,4 +77,4 @@ isArticleOwnedByUser uId slug = do
 
 
 sqlToArticle :: (String,String,String,String) -> T.Article
-sqlToArticle = undefined
+sqlToArticle (title,slug,body,user) = T.Article { T.articleSlug= slug, T.articleTitle= title,T.articleBody= body,T.articleAuthor = "",T.articleTags= []}

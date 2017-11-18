@@ -9,14 +9,21 @@ module Adapter.SQL (countUserByEmail
                      ,getArticle
                      ,getArticles
                      ,deleteArticle
+                     ,connect
+                     ,Connection
                      ) where
 
 
 import            Database.YeshQL
+import            Database.HDBC(commit,run,toSql,disconnect )
+import            Database.HDBC.Sqlite3(connectSqlite3,Connection)
 
 import qualified Core.Types as T
 
---  SQL queries to manipulate users --
+connect :: IO Connection
+connect = connectSqlite3 "/Users/lambda/development/blog.db"
+
+--  SQL queries to maipulate users --
 [yesh|
   -- name:countUserByEmail :: (Int)
   -- :email :: String
@@ -45,7 +52,7 @@ import qualified Core.Types as T
      -- :body :: String
      -- :slug :: String
      -- :userid :: Int
-     INSERT INTO articles (title,body,slug,author) VALUES (:title,:body,:slug,:userid)
+     INSERT INTO articles (title,body,slug,userid) VALUES (:title,:body,:slug,:userid)
      ;;;
      -- name:updateArticle :: rowcount Int
      -- :slug :: String
@@ -69,3 +76,9 @@ import qualified Core.Types as T
      -- :slug :: String
      DELETE FROM articles WHERE slug= :slug
 |]
+
+insert  = do
+  conn <- connect
+  insertArticle "fromsql" "fromsql LO" "fromsql" 1 conn
+  commit conn
+  disconnect conn
