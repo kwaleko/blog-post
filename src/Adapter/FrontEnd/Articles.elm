@@ -1,7 +1,7 @@
 module Articles exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (href, placeholder, value)
+import Html.Attributes exposing (checked, colspan, href, placeholder, style, type_, value)
 import Html.Events exposing (..)
 import Http
 import List as List exposing (..)
@@ -11,7 +11,7 @@ import Types exposing (Article, getApiArticles, getApiArticlesBySlug)
 type State
     = ListArticles (List Article)
     | OneArticle Article
-    | Error String
+    | Error Http.Error
     | Nothing
 
 
@@ -40,29 +40,68 @@ update msg model =
             ( OneArticle article, Cmd.none )
 
         OneArticleRetrived (Err error) ->
-            ( Error (toString error), Cmd.none )
+            ( Error error, Cmd.none )
 
         ArticlesRetrieved (Ok articles) ->
             ( ListArticles articles, Cmd.none )
 
         ArticlesRetrieved (Err newError) ->
-            ( Error (toString newError), Cmd.none )
+            ( Error newError, Cmd.none )
 
 
 view : Model -> Html Msg
 view model =
     case model of
         Error message ->
-            div [] [ text message ]
+            div [] [ text (toString message) ]
 
         ListArticles articles ->
-            div [] (posts articles)
+            div []
+                [ navBar
+                , div [] (posts articles)
+                ]
 
         OneArticle article ->
             articleToHtml article
 
         Nothing ->
             div [] []
+
+
+navBar : Html Msg
+navBar =
+    div
+        [ style
+            [ ( "height", "40px" )
+            , ( "background-color", "#D55757" )
+            , ( "padding", "18px" )
+            , ( "font-family", "Geneva" )
+            , ( "font-size", "20px" )
+            , ( "text-decoration", "bold" )
+            , ( "letter-spacing", "2px" )
+            , ( "color", "#FFFFFF" )
+            ]
+        ]
+        [ div [ style [ ( "float", "left" ) ] ]
+            [ text "Khaled Omar"
+            ]
+        , div [ style [ ( "float", "right" ) ] ]
+            [ ul
+                [ style
+                    [ ( "padding", "0px" )
+                    , ( "margin", "0px" )
+                    , ( "list-style-type", "none" )
+                    ]
+                ]
+                [ a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
+                    [ li [ style [ ( "display", "inline" ), ( "padding", "10px" ) ] ] [ text "HOME" ] ]
+                , a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
+                    [ li [ style [ ( "display", "inline" ), ( "padding", "10px" ) ] ] [ text "RESUME" ] ]
+                , a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
+                    [ li [ style [ ( "display", "inline" ), ( "padding", "5px" ) ] ] [ text "CONTACT" ] ]
+                ]
+            ]
+        ]
 
 
 posts : List Article -> List (Html Msg)
@@ -72,8 +111,46 @@ posts articles =
 
 articleTitleToHtml : Article -> Html Msg
 articleTitleToHtml article =
-    div []
-        [ h1 [] [ a [ href "#", onClick (GetArticleBySlug article.articleSlug) ] [ text article.articleTitle ] ]
+    table [ style [ ( "font-family", "Verdana" ), ( "align", "center" ), ( "text-decoration", "bold" ), ( "width", "50%" ) ] ]
+        [ tr []
+            [ td [ colspan 3 ]
+                [ p []
+                    [ a
+                        [ href "#"
+                        , onClick (GetArticleBySlug article.articleSlug)
+                        , style
+                            [ ( "color", "#000000" )
+                            , ( "text-decoration", "none" )
+                            , ( "font-size", "2.5em" )
+                            , ( "font-weight", "bold" )
+                            ]
+                        ]
+                        [ text article.articleTitle ]
+                    ]
+                ]
+            ]
+        , tr
+            []
+            [ td
+                [ style
+                    [ ( "color", "#000000" )
+                    , ( "text-decoration", "italic" )
+                    , ( "font-size", "1em" )
+                    , ( "font-weight", "normal" )
+                    , ( "align", "left" )
+                    , ( "width", "14%" )
+                    ]
+                ]
+                [ text "23-4-2017" ]
+            , td [ style [ ( "font-weight", "bold" ) ] ]
+                [ input [ type_ "radio", checked True ] []
+                , text "Haskell,Elm"
+                ]
+            ]
+        , br [] []
+
+        --,
+        -- , tr [ colspan 3 ,style [("width","100%")]] [ hr [] [] ]
         ]
 
 
