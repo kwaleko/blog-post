@@ -62,7 +62,11 @@ view model =
                 ]
 
         OneArticle article ->
-            articleToHtml article
+            div[style [("width","100%"),("display","block"),("align","center")]][
+                 navBar
+                ,articleToHtml article
+                ]
+
 
         Nothing ->
             div [] []
@@ -149,8 +153,6 @@ articleTitleToHtml article =
             ]
         , br [] []
 
-        --,
-        -- , tr [ colspan 3 ,style [("width","100%")]] [ hr [] [] ]
         ]
 
 
@@ -161,12 +163,62 @@ tagsToHtml tags =
 
 articleToHtml : Article -> Html Msg
 articleToHtml article =
+    div[style [("float","center"),("width","100%")]][
+        table [ style [ ( "font-family", "Verdana" ), ( "align", "center" ), ( "text-decoration", "bold" ),
+                            ( "width", "50%" ),("float","center") ] ]
+
+        [ tr []
+            [ td [ colspan 3 ]
+                [ p []
+                    [ a
+                        [ href "#"
+                        , onClick (GetArticleBySlug article.articleSlug)
+                        , style
+                            [ ( "color", "#000000" )
+                            , ( "text-decoration", "none" )
+                            , ( "font-size", "2.5em" )
+                            , ( "font-weight", "bold" )
+                            ,( "align", "center" )
+                            ]
+                        ]
+                        [ text article.articleTitle ]
+                    ]
+                ]
+            ]
+        , tr
+            []
+            [ td
+                [ style
+                    [ ( "color", "#000000" )
+                    , ( "text-decoration", "italic" )
+                    , ( "font-size", "1em" )
+                    , ( "font-weight", "normal" )
+                    , ( "align", "left" )
+                    , ( "width", "14%" )
+                    ]
+                ]
+                [ text "23-4-2017" ]
+            , td [ style [ ( "font-weight", "bold" ) ] ]
+                [ input [ type_ "radio", checked True ] []
+                , text "Haskell,Elm"
+                ]
+            ]
+        , tr [][
+               td [colspan 3][
+                    text article.articleBody
+                   ]
+              ]
+            ]
+            ]
+
+
+    {-
     div []
         [ h1 [] [ text article.articleTitle ]
         , br [] []
         , div [] (tagsToHtml article.articleTags)
         , p [] [ text article.articleBody ]
-        ]
+        ] -}
 
 
 getArticlesCmd : Cmd Msg
