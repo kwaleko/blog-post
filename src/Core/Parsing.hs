@@ -1,6 +1,6 @@
 {-# Language OverloadedStrings #-}
 
-module Parsing where
+module Core.Parsing where
 
 
 import Data.Attoparsec.Combinator(choice,manyTill,lookAhead)
@@ -11,9 +11,18 @@ import Data.Attoparsec.Text(anyChar
                            ,string
                            ,parseOnly
                            ,Parser(..))
-import Data.Text hiding(concat)
+import Data.Text hiding(concat,map)
 
 import qualified  Core.Types as T
+
+
+runParser' :: String-> [(Text,String)]
+runParser' val = case runParser val of
+  Left _ -> []
+  Right content -> map (\(txt,style) -> (txt,show style)) content
+
+runParser :: String -> Either String  [(Text,T.Style)]
+runParser txt = parseOnly styling $ pack txt
 
 styling :: Parser [(Text,T.Style)]
 styling  = concat <$> manyTill (choice [styledTxt,unstyledTxt])  end
@@ -68,11 +77,11 @@ code = do
   newLine
   return [(pack code,T.Code)]
 
-between :: String -> T.Style -> Parser [(Text,T.Style)]
-between   parm style =  undefined-- do
- -- string  parm
- -- txt <- manyTill anyChar  $ string parm
-  --return [(pack txt,style)]
+between :: Text  -> T.Style -> Parser [(Text,T.Style)]
+between   parm style =   do
+  string  parm
+  txt <- manyTill anyChar  $ string parm
+  return [(pack txt,style)]
 
 fourSpaces :: Parser ()
 fourSpaces = do

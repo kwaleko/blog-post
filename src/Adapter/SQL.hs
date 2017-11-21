@@ -65,12 +65,12 @@ connect = connectSqlite3 "/Users/lambda/development/blog.db"
      -- :slug :: String
      SELECT COUNT(recid) FROM articles WHERE recid= :userId and slug= :slug
      ;;;
-     --name:getArticles :: [(String,String,String,String)]
-     SELECT title,body,slug,userid FROM articles
+     --name:getArticles :: [(String,String,String,String,String,String)]
+     SELECT title,body,slug,userid,createdAt,updatedAt FROM articles
      ;;;
-     --name:getArticle :: (String,String,String,String)
+     --name:getArticle :: (String,String,String,String,String,String)
      -- :slug :: String
-     SELECT title,body,slug,userid FROM articles WHERE slug = :slug
+     SELECT title,body,slug,userid,createdAt,upatedAt FROM articles WHERE slug = :slug
      ;;;
      --name:deleteArticle :: rowcount Int
      -- :slug :: String

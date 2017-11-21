@@ -4,6 +4,7 @@ module Core.Types where
 
 import Elm
 import GHC.Generics
+import Data.Text
 
 
 type UserName = String
@@ -12,6 +13,8 @@ type UserId   = Int
 type Tag      = String
 type Slug     = String
 type Title    = String
+data NoContent = NoContent
+  deriving (Generic,ElmType)
 
 -- Entity for Register use-case --
 
@@ -60,10 +63,11 @@ data Article = Article
   {articleSlug      :: String
   ,articleTitle     :: String
   ,articleBody      :: String
-  --,articleCreatedAt :: UTCDateTime
-  --,articleUpdatedAt :: UTCDateTime
   ,articleAuthor    :: UserName
   ,articleTags      :: [Tag]
+  ,parsedArticle    ::  [(Text,String)]
+  ,articleCreatedAt :: String
+  ,articleUpdatedAt :: String
   } deriving (Eq,Show,Generic,ElmType)
 
 -- Types related to the Parser module --
@@ -79,4 +83,4 @@ data Style
   | Heading
   | Mark
   | Code
-  deriving(Eq,Show)
+  deriving(Eq,Show,Generic)

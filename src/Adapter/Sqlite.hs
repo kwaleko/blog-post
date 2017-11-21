@@ -2,6 +2,7 @@ module Adapter.Sqlite where
 
 import qualified Adapter.SQL as S
 import qualified Core.Types  as T
+import qualified Core.Parsing as P
 
 import Control.Monad.Reader
 import Database.HDBC(commit)
@@ -48,7 +49,6 @@ createArticle article slug uId = do
   let body = T.createArticleBody article
   liftIO $ S.insertArticle title body slug uId conn
   liftIO $ commit conn
-  --liftIO $ disconnect conn
   return ()
 
 findArticle ::(MonadIO m,MonadReader r m,IConnection r) => T.Slug -> m [T.Article]
@@ -57,7 +57,19 @@ findArticle slug = do
   article <- liftIO $ S.getArticle slug conn
   case article of
     Nothing ->return []
-    Just (title,body,slug,uId) -> return [ T.Article slug title body "" []]
+    Just (title,body,slug,uId,createdAt,updatedAt) ->
+      return [
+      T.Article {
+           T.articleTitle = title
+          ,T.articleSlug =slug
+          ,T.articleBody = body
+          ,T.articleAuthor = ""
+          ,T.articleTags = []
+          ,T.articleCreatedAt= createdAt
+          ,T.articleUpdatedAt = updatedAt
+          ,T.parsedArticle = P.runParser' body
+                }
+      ]
 
 findArticles ::(MonadIO m,MonadReader r m,IConnection r) => m [T.Article]
 findArticles = do
@@ -76,5 +88,13 @@ isArticleOwnedByUser uId slug = do
     _ -> return $ Just False
 
 
-sqlToArticle :: (String,String,String,String) -> T.Article
-sqlToArticle (title,slug,body,user) = T.Article { T.articleSlug= slug, T.articleTitle= title,T.articleBody= body,T.articleAuthor = "",T.articleTags= []}
+sqlToArticle :: (String,String,String,String,String,String) -> T.Article
+sqlToArticle (title,body,slug,user,createdAt,updatedAt) = T.Article
+  {T.articleTitle= title
+  ,T.articleBody= body
+  ,T.articleSlug= slug
+  ,T.articleAuthor = "admin"
+  ,T.articleTags= []
+  ,T.articleCreatedAt = createdAt
+  ,T.articleUpdatedAt = updatedAt
+  ,T.parsedArticle = P.runParser' body}
