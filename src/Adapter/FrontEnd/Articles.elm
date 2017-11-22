@@ -53,20 +53,19 @@ view : Model -> Html Msg
 view model =
     case model of
         Error message ->
-            div [] [ text (toString message) ]
+            div [ style [ ( "margin-left", "auto" ), ( "margin-right", "auto" ), ( "width", "800px" ) ] ] [ text (toString message) ]
 
         ListArticles articles ->
-            div []
+            div [ style [ ( "margin-left", "auto" ), ( "margin-right", "auto" ), ( "width", "100vw" ) ] ]
                 [ navBar
                 , div [] (posts articles)
                 ]
 
         OneArticle article ->
-            div[style [("width","100%"),("display","block"),("align","center")]][
-                 navBar
-                ,articleToHtml article
+            div [ style [ ( "width", "100%" ), ( "display", "block" ), ( "align", "center" ) ] ]
+                [ navBar
+                , articleToHtml article
                 ]
-
 
         Nothing ->
             div [] []
@@ -115,7 +114,13 @@ posts articles =
 
 articleTitleToHtml : Article -> Html Msg
 articleTitleToHtml article =
-    table [ style [ ( "font-family", "Verdana" ), ( "align", "center" ), ( "text-decoration", "bold" ), ( "width", "50%" ) ] ]
+    table
+        [ style
+            [ ( "font-family", "Verdana" )
+            , ( "text-decoration", "bold" )
+            , ( "margin-left", "1vw" )
+            ]
+        ]
         [ tr []
             [ td [ colspan 3 ]
                 [ p []
@@ -125,7 +130,7 @@ articleTitleToHtml article =
                         , style
                             [ ( "color", "#000000" )
                             , ( "text-decoration", "none" )
-                            , ( "font-size", "2.5em" )
+                            , ( "font-size", "2em" )
                             , ( "font-weight", "bold" )
                             ]
                         ]
@@ -145,14 +150,13 @@ articleTitleToHtml article =
                     , ( "width", "14%" )
                     ]
                 ]
-                [ text "23-4-2017" ]
+                [ text article.articleCreatedAt ]
             , td [ style [ ( "font-weight", "bold" ) ] ]
                 [ input [ type_ "radio", checked True ] []
                 , text "Haskell,Elm"
                 ]
             ]
         , br [] []
-
         ]
 
 
@@ -163,62 +167,84 @@ tagsToHtml tags =
 
 articleToHtml : Article -> Html Msg
 articleToHtml article =
-    div[style [("float","center"),("width","100%")]][
-        table [ style [ ( "font-family", "Verdana" ), ( "align", "center" ), ( "text-decoration", "bold" ),
-                            ( "width", "50%" ),("float","center") ] ]
-
-        [ tr []
-            [ td [ colspan 3 ]
-                [ p []
-                    [ a
-                        [ href "#"
-                        , onClick (GetArticleBySlug article.articleSlug)
-                        , style
-                            [ ( "color", "#000000" )
-                            , ( "text-decoration", "none" )
-                            , ( "font-size", "2.5em" )
-                            , ( "font-weight", "bold" )
-                            ,( "align", "center" )
+    div [ style [ ( "float", "center" ), ( "width", "100%" ) ] ]
+        [ table
+            [ style
+                [ ( "font-family", "Verdana" )
+                , ( "align", "center" )
+                , ( "text-decoration", "bold" )
+                , ( "width", "50%" )
+                , ( "float", "center" )
+                ]
+            ]
+            [ tr []
+                [ td [ colspan 3 ]
+                    [ p []
+                        [ a
+                            [ href "#"
+                            , onClick (GetArticleBySlug article.articleSlug)
+                            , style
+                                [ ( "color", "#000000" )
+                                , ( "text-decoration", "none" )
+                                , ( "font-size", "2.5em" )
+                                , ( "font-weight", "bold" )
+                                , ( "align", "center" )
+                                ]
                             ]
+                            [ text article.articleTitle ]
                         ]
-                        [ text article.articleTitle ]
+                    ]
+                ]
+            , tr
+                []
+                [ td
+                    [ style
+                        [ ( "color", "#000000" )
+                        , ( "text-decoration", "italic" )
+                        , ( "font-size", "1em" )
+                        , ( "font-weight", "normal" )
+                        , ( "align", "left" )
+                        , ( "width", "14%" )
+                        ]
+                    ]
+                    [ text "23-4-2017" ]
+                , td [ style [ ( "font-weight", "bold" ) ] ]
+                    [ input [ type_ "radio", checked True ] []
+                    , text "Haskell,Elm"
+                    ]
+                ]
+            , tr []
+                [ td [ colspan 3 ]
+                    [ div [style [("margin-left","1vw")]] (List.map convert article.parsedArticle)
                     ]
                 ]
             ]
-        , tr
-            []
-            [ td
-                [ style
-                    [ ( "color", "#000000" )
-                    , ( "text-decoration", "italic" )
-                    , ( "font-size", "1em" )
-                    , ( "font-weight", "normal" )
-                    , ( "align", "left" )
-                    , ( "width", "14%" )
-                    ]
-                ]
-                [ text "23-4-2017" ]
-            , td [ style [ ( "font-weight", "bold" ) ] ]
-                [ input [ type_ "radio", checked True ] []
-                , text "Haskell,Elm"
-                ]
-            ]
-        , tr [][
-               td [colspan 3][
-                    text article.articleBody
-                   ]
-              ]
-            ]
-            ]
+        ]
 
 
-    {-
-    div []
-        [ h1 [] [ text article.articleTitle ]
-        , br [] []
-        , div [] (tagsToHtml article.articleTags)
-        , p [] [ text article.articleBody ]
-        ] -}
+convert : ( String, String ) -> Html a
+convert ( txt, style1 ) =
+    case style1 of
+        "Bold" ->
+            strong [] [ text txt ]
+
+        "Italic" ->
+            em [] [ text txt ]
+
+        "Heading" ->
+            h3 [] [ text txt ]
+
+        "Mark" ->
+            span [style [("background-color","#EFDD15")]] [ text txt ]
+
+        "Code" ->
+            div [style [("background-color","#EBEBE8")
+                        ,("margin","1 4 1 4")]]
+                [ code [] [ text txt ]
+                ]
+
+        _ ->
+            text txt
 
 
 getArticlesCmd : Cmd Msg

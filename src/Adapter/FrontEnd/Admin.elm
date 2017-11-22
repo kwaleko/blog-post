@@ -9,7 +9,6 @@ import Types
     exposing
         ( Article
         , CreateArticle
-        , encodeSession
         , postApiArticlesByUserid
         )
 
@@ -37,6 +36,7 @@ type Msg
     | ArticleSubmitted (Result Http.Error Article)
     | GetUidFromStorage Int
     | Logout
+    --| Sucess
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -103,17 +103,17 @@ view model =
             , placeholder "choose a title"
             , style
                 [ ( "background-color", "white" )
-                , ( "border", "none" )
+               -- , ( "border", "none" )
                 , ( "color", " black" )
                 , ( "padding", "15px 32px" )
                 , ( "text-align", "center" )
-                , ( "text-decoration", "none" )
+               -- , ( "text-decoration", "none" )
                 , ( "display", "inline-block" )
                 , ( "font-size", "16px" )
                 , ( "margin", "4px 2px" )
-                , ( "cursor", "pointer" )
+               -- , ( "cursor", "pointer" )
                 , ( "width", "70%" )
-                , ( "height", "12px" )
+                , ( "height", "15px" )
                 ]
             ]
             []
@@ -122,16 +122,16 @@ view model =
             [ onInput SetBody
             , placeholder "write your article"
             , style
-                [ ( "background-color", "white" )
-                , ( "border", "none" )
-                , ( "color", " black" )
+                [-- ( "background-color", "white" )
+               -- , ( "border", "none" )
+                 ( "color", " black" )
                 , ( "padding", "15px 32px" )
-                , ( "text-align", "center" )
-                , ( "text-decoration", "none" )
+                , ( "text-align", "left" )
+               -- , ( "text-decoration", "none" )
                 , ( "display", "inline-block" )
                 , ( "font-size", "16px" )
                 , ( "margin", "4px 2px" )
-                , ( "cursor", "pointer" )
+               -- , ( "cursor", "pointer" )
                 , ( "width", "70%" )
                 , ( "height", "400px" )
                 ]
