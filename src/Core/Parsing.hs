@@ -3,7 +3,7 @@
 module Core.Parsing where
 
 
-import Data.Attoparsec.Combinator(choice,manyTill,lookAhead)
+import Data.Attoparsec.Combinator(choice,manyTill,lookAhead,many1)
 import Data.Attoparsec.Text(anyChar
                            ,char
                            ,endOfLine
@@ -17,7 +17,7 @@ import qualified  Core.Types as T
 
 
 runParser' :: String-> [(Text,String)]
-runParser' val = case runParser val of
+runParser' val = case runParser (val ++ "EOA") of
   Left _ -> []
   Right content -> map (\(txt,style) -> (txt,show style)) content
 
@@ -54,7 +54,8 @@ heading :: Parser [(Text,T.Style)]
 heading = do
   newLine
   title <- manyTill anyChar newLine
-  manyTill spaceOrEqual newLine
+  many1 equal
+  newLine
   return [(pack title,T.Heading)]
 
 url :: Parser [(Text,T.Style)]
@@ -74,7 +75,6 @@ code :: Parser [(Text,T.Style)]
 code = do
   fourSpaces
   code <- manyTill anyChar newLine
-  newLine
   return [(pack code,T.Code)]
 
 between :: Text  -> T.Style -> Parser [(Text,T.Style)]
@@ -93,6 +93,10 @@ fourSpaces = do
 
 newLine :: Parser Char
 newLine = char '\n'
+
+equal = char '='
+
+
 
 spaceOrEqual :: Parser Char
 spaceOrEqual = choice [char '=',space]
