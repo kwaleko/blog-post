@@ -9,6 +9,14 @@ import Database.HDBC(commit)
 import Database.HDBC.Types(IConnection)
 
 
+migrateDB :: (MonadIO m,MonadReader r m, IConnection r) => m ()
+migrateDB = do
+  conn <- ask
+  liftIO $ S.createTbUsers conn
+  liftIO $ S.createTbArticles conn
+  liftIO $ commit conn
+  return ()
+
 isEmailExists :: (MonadIO m, MonadReader r m, IConnection r ) => T.Email -> m Bool
 isEmailExists email = do
   conn <- ask

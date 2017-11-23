@@ -1,6 +1,8 @@
 {-#LANGUAGE QuasiQuotes #-}
 module Adapter.SQL (countUserByEmail
                      ,countUserByUser
+                     ,createTbArticles
+                     ,createTbUsers
                      ,getUser
                      ,insertUser
                      --Articles
@@ -23,7 +25,21 @@ import qualified Core.Types as T
 connect :: IO Connection
 connect = connectSqlite3 "/Users/lambda/development/blog.db"
 
+-- to be removed
+connect1 :: IO Connection
+connect1 = connectSqlite3 "/Users/lambda/development/blog1.db"
+
 --  SQL queries to maipulate users --
+[yesh|
+     -- name:createTbArticles::rowcount Int
+     CREATE TABLE "articles" ( `recid` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
+     , `title` TEXT NOT NULL, `body` TEXT NOT NULL, `slug` TEXT, `userid` INTEGER
+     , `tags` TEXT, `createdat` TEXT DEFAULT CURRENT_TIMESTAMP, `modifiedat` TEXT DEFAULT CURRENT_TIMESTAMP )
+     ;;;
+     -- name:createTbUsers :: rowcount Int
+     CREATE TABLE `users` ( `userid` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
+     , `username` TEXT UNIQUE, `email` TEXT UNIQUE, `password` TEXT )
+|]
 [yesh|
   -- name:countUserByEmail :: (Int)
   -- :email :: String
@@ -66,19 +82,22 @@ connect = connectSqlite3 "/Users/lambda/development/blog.db"
      SELECT COUNT(recid) FROM articles WHERE recid= :userId and slug= :slug
      ;;;
      --name:getArticles :: [(String,String,String,String,String,String)]
-     SELECT title,body,slug,userid,createdAt,updatedAt FROM articles
+     SELECT title,body,slug,userid,createdat,modifiedat FROM articles
      ;;;
      --name:getArticle :: (String,String,String,String,String,String)
      -- :slug :: String
-     SELECT title,body,slug,userid,createdAt,upatedAt FROM articles WHERE slug = :slug
+     SELECT title,body,slug,userid,createdat,modifiedat FROM articles WHERE slug = :slug
      ;;;
      --name:deleteArticle :: rowcount Int
      -- :slug :: String
      DELETE FROM articles WHERE slug= :slug
+     ;;;
+     --name:deleteArticles :: rowcount Int
+     DELETE FROM articles
 |]
 
-insert  = do
-  conn <- connect
-  insertArticle "fromsql" "fromsql LO" "fromsql" 1 conn
+{- insert  = do
+  conn <- connect1
+  migrateDB conn
   commit conn
-  disconnect conn
+  disconnect conn -}
