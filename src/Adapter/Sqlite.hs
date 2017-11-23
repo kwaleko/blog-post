@@ -7,7 +7,7 @@ import qualified Core.Parsing as P
 import Control.Monad.Reader
 import Database.HDBC(commit)
 import Database.HDBC.Types(IConnection)
-import Database.HDBC.Sqlite3(Connection(..))
+
 
 isEmailExists :: (MonadIO m, MonadReader r m, IConnection r ) => T.Email -> m Bool
 isEmailExists email = do
@@ -65,8 +65,8 @@ findArticle slug = do
           ,T.articleBody = body
           ,T.articleAuthor = ""
           ,T.articleTags = []
-          ,T.articleCreatedAt= createdAt
-          ,T.articleUpdatedAt = updatedAt
+          ,T.articleCreatedAt= take 10 createdAt
+          ,T.articleUpdatedAt = take 10 updatedAt
           ,T.parsedArticle = P.runParser' body
                 }
       ]
@@ -95,6 +95,6 @@ sqlToArticle (title,body,slug,user,createdAt,updatedAt) = T.Article
   ,T.articleSlug= slug
   ,T.articleAuthor = "admin"
   ,T.articleTags= []
-  ,T.articleCreatedAt = createdAt
-  ,T.articleUpdatedAt = updatedAt
+  ,T.articleCreatedAt = take 10 createdAt
+  ,T.articleUpdatedAt = take 10 updatedAt
   ,T.parsedArticle = P.runParser' body}
