@@ -3,7 +3,10 @@
 module Core.Parsing where
 
 
-import Data.Attoparsec.Combinator(choice,manyTill,lookAhead,many1)
+import Data.Attoparsec.Combinator(choice
+                                 ,many1
+                                 ,manyTill
+                                 ,lookAhead)
 import Data.Attoparsec.Text(anyChar
                            ,char
                            ,endOfLine
@@ -95,8 +98,6 @@ newLine :: Parser Char
 newLine = char '\n'
 
 equal = char '='
-
-
 
 spaceOrEqual :: Parser Char
 spaceOrEqual = choice [char '=',space]
