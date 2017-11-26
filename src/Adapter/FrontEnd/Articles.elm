@@ -5,7 +5,7 @@ import Html.Attributes exposing (checked, colspan, href, placeholder, style, typ
 import Html.Events exposing (..)
 import Http
 import List as List exposing (..)
-import Types exposing (Article, getApiArticles, getApiArticlesBySlug)
+import Generated.Types exposing (Article, getApiArticles, getApiArticlesBySlug)
 
 
 type State

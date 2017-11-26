@@ -1,11 +1,10 @@
-module  Types exposing (..)
+module Types exposing (..)
 
 import Json.Decode exposing (..)
 import Json.Decode.Pipeline exposing (..)
 import Json.Encode
 import Http
 import String
-import Tuple
 
 
 type alias Register =
@@ -13,13 +12,6 @@ type alias Register =
     , registerUserName : String
     , registerPassword : String
     }
-
-decodeRegister : Decoder Register
-decodeRegister =
-    decode Register
-        |> required "registerEmail" string
-        |> required "registerUserName" string
-        |> required "registerPassword" string
 
 encodeRegister : Register -> Json.Encode.Value
 encodeRegister x =
@@ -52,19 +44,11 @@ decodeArticle =
         |> required "articleCreatedAt" string
         |> required "articleUpdatedAt" string
 
-
 type alias CreateArticle =
     { createArticleTitle : String
     , createArticleBody : String
     , createArticleTags : List (String)
     }
-
-decodeCreateArticle : Decoder CreateArticle
-decodeCreateArticle =
-    decode CreateArticle
-        |> required "createArticleTitle" string
-        |> required "createArticleBody" string
-        |> required "createArticleTags" (list string)
 
 encodeCreateArticle : CreateArticle -> Json.Encode.Value
 encodeCreateArticle x =
@@ -79,18 +63,31 @@ type alias Auth =
     , authPassword : String
     }
 
-decodeAuth : Decoder Auth
-decodeAuth =
-    decode Auth
-        |> required "authEmail" string
-        |> required "authPassword" string
-
 encodeAuth : Auth -> Json.Encode.Value
 encodeAuth x =
     Json.Encode.object
         [ ( "authEmail", Json.Encode.string x.authEmail )
         , ( "authPassword", Json.Encode.string x.authPassword )
         ]
+
+type alias ArticleBody =
+    { content : String
+    }
+
+encodeArticleBody : ArticleBody -> Json.Encode.Value
+encodeArticleBody x =
+    Json.Encode.object
+        [ ( "content", Json.Encode.string x.content )
+        ]
+
+type alias PArticleBody =
+    { pContent : List ((String, String))
+    }
+
+decodePArticleBody : Decoder PArticleBody
+decodePArticleBody =
+    decode PArticleBody
+        |> required "pContent" (list (map2 (,) (index 0 string) (index 1 string)))
 
 postApiUsersRegister : Register -> Http.Request (Int)
 postApiUsersRegister body =
@@ -182,6 +179,29 @@ getApiArticlesBySlug capture_slug =
             Http.emptyBody
         , expect =
             Http.expectJson decodeArticle
+        , timeout =
+            Nothing
+        , withCredentials =
+            False
+        }
+
+getApiArticles : ArticleBody -> Http.Request (PArticleBody)
+getApiArticles body =
+    Http.request
+        { method =
+            "GET"
+        , headers =
+            []
+        , url =
+            String.join "/"
+                [ "http://localhost:8001"
+                , "api"
+                , "articles"
+                ]
+        , body =
+            Http.jsonBody (encodeArticleBody body)
+        , expect =
+            Http.expectJson decodePArticleBody
         , timeout =
             Nothing
         , withCredentials =

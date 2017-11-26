@@ -1,7 +1,7 @@
 module Register exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (placeholder, value)
+import Html.Attributes exposing (placeholder, value,style)
 import Html.Events exposing (..)
 import Http
 import Navigation exposing (load)
@@ -25,7 +25,7 @@ init =
 
 type Msg
     = NoOp
-    | SetUserName   String
+    | SetUserName String
     | SetEmail String
     | SetPassword String
     | SignUp
@@ -48,7 +48,7 @@ update msg model =
             ( { model | email = uEmail }, Cmd.none )
 
         RegisterCompleted (Ok uId) ->
-            ( { model | userid = Just uId }, Cmd.batch [ uId |> Just |> storeToken, load "http://localhost:8000/index.html" ] )
+            ( { model | userid = Just uId }, Cmd.batch [ uId |> storeToken, load "http://localhost:8000/admin.html" ] )
 
         RegisterCompleted (Err message) ->
             ( { model | error = Just (toString message) }, Cmd.none )
@@ -68,16 +68,70 @@ view model =
                 Just error ->
                     error
     in
-    div []
+    div [style [( "background-color", "#D55757")]]
         [ h3 [] [ text "Register" ]
         , br [] []
-        , input [ onInput SetUserName, placeholder "choose a username" ] []
+        , input [ onInput SetUserName, placeholder "choose a username"
+                ,style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " black" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                , ( "width", "70%" )
+                , ( "height", "12px" )
+                ]] []
         , br [] []
-        , input [ onInput SetEmail, placeholder "write your email" ] []
+        , input [ onInput SetEmail, placeholder "write your email"
+                ,style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " black" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                , ( "width", "70%" )
+                , ( "height", "12px" )
+                ]] []
         , br [] []
-        , input [ onInput SetPassword, placeholder "write your password" ] []
+        , input [ onInput SetPassword, placeholder "write your password"
+                ,style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " black" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                , ( "width", "70%" )
+                , ( "height", "12px" )
+                ]] []
         , br [] []
-        , button [ onClick SignUp ] [ text "Sign Up" ]
+        , button [ onClick SignUp
+                 ,style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " #D55757" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                ]] [ text "Sign Up" ]
         , div [] [ text message ]
         ]
 

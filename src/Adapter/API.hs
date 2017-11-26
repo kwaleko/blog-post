@@ -20,11 +20,11 @@ import Servant.Client
 import Servant.Server
 import Servant.API
 
-import qualified Lib as L
-import qualified Core.Types as T
-import qualified Core.Users as U
+import qualified Lib           as L
+import qualified Core.Types    as T
+import qualified Core.Users    as U
 import qualified Core.Articles as A
-import qualified Adapter.SQL as S
+import qualified Adapter.SQL   as S
 
 
 type API

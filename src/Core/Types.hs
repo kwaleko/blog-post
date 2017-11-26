@@ -65,10 +65,18 @@ data Article = Article
   ,articleBody      :: String
   ,articleAuthor    :: UserName
   ,articleTags      :: [Tag]
-  ,parsedArticle    ::  [(Text,String)]
+  ,parsedArticle    :: [(Text,String)]
   ,articleCreatedAt :: String
   ,articleUpdatedAt :: String
   } deriving (Eq,Show,Generic,ElmType)
+
+data ArticleBody = ArticleBody
+  {content :: String}
+  deriving(Eq,Show,Generic,ElmType)
+
+data PArticleBody = PArticleBody
+  {pContent :: [(Text,String)]}
+  deriving(Eq,Show,Generic,ElmType)
 
 -- Types related to the Parser module --
 data QueryArticleBy

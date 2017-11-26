@@ -1,0 +1,443 @@
+var _user$project$Register$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Register$Model = F5(
+	function (a, b, c, d, e) {
+		return {username: a, email: b, password: c, error: d, userid: e};
+	});
+var _user$project$Register$init = {
+	ctor: '_Tuple2',
+	_0: A5(_user$project$Register$Model, '', '', '', _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing),
+	_1: _elm_lang$core$Platform_Cmd$none
+};
+var _user$project$Register$RegisterCompleted = function (a) {
+	return {ctor: 'RegisterCompleted', _0: a};
+};
+var _user$project$Register$registerCmd = function (credential) {
+	return A2(
+		_elm_lang$http$Http$send,
+		_user$project$Register$RegisterCompleted,
+		_user$project$Types$postApiUsersRegister(credential));
+};
+var _user$project$Register$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'NoOp':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'SetPassword':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{password: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetUserName':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{username: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetEmail':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{email: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'RegisterCompleted':
+				if (_p0._0.ctor === 'Ok') {
+					var _p1 = _p0._0._0;
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								userid: _elm_lang$core$Maybe$Just(_p1)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$batch(
+							{
+								ctor: '::',
+								_0: _user$project$Ports$storeToken(_p1),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$navigation$Navigation$load('http://localhost:8000/admin.html'),
+									_1: {ctor: '[]'}
+								}
+							})
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								error: _elm_lang$core$Maybe$Just(
+									_elm_lang$core$Basics$toString(_p0._0._0))
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Register$registerCmd(
+						A3(_user$project$Types$Register, model.username, model.email, model.password))
+				};
+		}
+	});
+var _user$project$Register$SignUp = {ctor: 'SignUp'};
+var _user$project$Register$SetPassword = function (a) {
+	return {ctor: 'SetPassword', _0: a};
+};
+var _user$project$Register$SetEmail = function (a) {
+	return {ctor: 'SetEmail', _0: a};
+};
+var _user$project$Register$SetUserName = function (a) {
+	return {ctor: 'SetUserName', _0: a};
+};
+var _user$project$Register$view = function (model) {
+	var message = function () {
+		var _p2 = model.error;
+		if (_p2.ctor === 'Nothing') {
+			return '';
+		} else {
+			return _p2._0;
+		}
+	}();
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'background-color', _1: '#D55757'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h3,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Register'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$br,
+					{ctor: '[]'},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$input,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onInput(_user$project$Register$SetUserName),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$placeholder('choose a username'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$style(
+										{
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'white'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'border', _1: 'none'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'color', _1: ' black'},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'padding', _1: '15px 32px'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'none'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-block'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'font-size', _1: '16px'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'margin', _1: '4px 2px'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'width', _1: '70%'},
+																					_1: {
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'height', _1: '12px'},
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$input,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onInput(_user$project$Register$SetEmail),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$placeholder('write your email'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$style(
+												{
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'white'},
+													_1: {
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'border', _1: 'none'},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'color', _1: ' black'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'padding', _1: '15px 32px'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'none'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-block'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'font-size', _1: '16px'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'margin', _1: '4px 2px'},
+																					_1: {
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+																						_1: {
+																							ctor: '::',
+																							_0: {ctor: '_Tuple2', _0: 'width', _1: '70%'},
+																							_1: {
+																								ctor: '::',
+																								_0: {ctor: '_Tuple2', _0: 'height', _1: '12px'},
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$input,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onInput(_user$project$Register$SetPassword),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$placeholder('write your password'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$style(
+														{
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'white'},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'border', _1: 'none'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'color', _1: ' black'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'padding', _1: '15px 32px'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'none'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-block'},
+																					_1: {
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'font-size', _1: '16px'},
+																						_1: {
+																							ctor: '::',
+																							_0: {ctor: '_Tuple2', _0: 'margin', _1: '4px 2px'},
+																							_1: {
+																								ctor: '::',
+																								_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+																								_1: {
+																									ctor: '::',
+																									_0: {ctor: '_Tuple2', _0: 'width', _1: '70%'},
+																									_1: {
+																										ctor: '::',
+																										_0: {ctor: '_Tuple2', _0: 'height', _1: '12px'},
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$br,
+											{ctor: '[]'},
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$button,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(_user$project$Register$SignUp),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$style(
+															{
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'white'},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: 'border', _1: 'none'},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: 'color', _1: ' #D55757'},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'padding', _1: '15px 32px'},
+																			_1: {
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'text-align', _1: 'center'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'none'},
+																					_1: {
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-block'},
+																						_1: {
+																							ctor: '::',
+																							_0: {ctor: '_Tuple2', _0: 'font-size', _1: '16px'},
+																							_1: {
+																								ctor: '::',
+																								_0: {ctor: '_Tuple2', _0: 'margin', _1: '4px 2px'},
+																								_1: {
+																									ctor: '::',
+																									_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Sign Up'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$div,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text(message),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+};
+var _user$project$Register$main = _elm_lang$html$Html$program(
+	{init: _user$project$Register$init, view: _user$project$Register$view, update: _user$project$Register$update, subscriptions: _user$project$Register$subscriptions})();
+var _user$project$Register$NoOp = {ctor: 'NoOp'};

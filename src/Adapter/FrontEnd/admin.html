@@ -1,0 +1,24 @@
+<html>
+    <h1>Register Page</h1>
+    <div id ="main">
+
+    </div>
+    <script src="admin.js">
+
+    </script>
+    <script>
+     // var node = document.getElementByid("main");
+     var  app = Elm.Admin.fullscreen();
+
+     app.ports.clearToken.subscribe(function(userid){
+         // check if local storage does exist
+         if(localStorage.getItem("token") === null){
+             // do nothing
+         }
+         else {
+             localStorage.removeItem("token");
+             app.ports.getToken.send(null);
+         }
+     });
+    </script>
+</html>

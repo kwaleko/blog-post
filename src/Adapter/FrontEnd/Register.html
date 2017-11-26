@@ -1,0 +1,24 @@
+<html>
+    <h1>Register Page</h1>
+    <div id ="main">
+
+    </div>
+    <script src="register.js">
+
+    </script>
+    <script>
+     // var node = document.getElementByid("main");
+     var  app = Elm.Register.fullscreen();
+
+     app.ports.storeToken.subscribe(function(userid){
+         // check if local storage does exist
+         if(localStorage.getItem("token") === null){
+             // do nothing
+         }
+         else {
+             localStorage.setItem("token",userid);
+             app.ports.getToken.send(userid);
+         }
+     });
+    </script>
+</html>

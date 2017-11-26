@@ -1,4 +1,4 @@
-module Interface where
+module Core.Interfaces where
 
 import   Core.Types
 
@@ -7,6 +7,7 @@ class (Monad m) => ArticleRepo m where
   updateArticleBySlug :: Slug -> UpdateArticle -> Slug -> m ()
   isArticleOwnedByUser :: UserId -> Slug -> m (Maybe Bool)
   findArticles :: QueryArticleBy -> m [Article]
+  deleteArticle :: Slug -> m ()
 
 class (Monad m) => UserRepo m where
   addUser :: Register ->  m ()

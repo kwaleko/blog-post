@@ -1,0 +1,11 @@
+var _user$project$Ports$storeToken = _elm_lang$core$Native_Platform.outgoingPort(
+	'storeToken',
+	function (v) {
+		return v;
+	});
+var _user$project$Ports$clearToken = _elm_lang$core$Native_Platform.outgoingPort(
+	'clearToken',
+	function (v) {
+		return v;
+	});
+var _user$project$Ports$getToken = _elm_lang$core$Native_Platform.incomingPort('getToken', _elm_lang$core$Json_Decode$value);

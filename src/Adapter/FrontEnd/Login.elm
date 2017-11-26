@@ -1,12 +1,12 @@
 module Login exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (placeholder, value)
+import Html.Attributes exposing (placeholder, value,style)
 import Html.Events exposing (..)
 import Http
 import Navigation exposing (load)
 import Ports exposing (storeToken)
-import Types exposing (Auth, Session, encodeSession, getApiUsersLogin)
+import Types exposing (Auth, Session, encodeSession, postApiUsersLogin)
 
 
 type alias Model =
@@ -44,7 +44,7 @@ update msg model =
             ( { model | username = uName }, Cmd.none )
 
         LoginAttempt (Ok uId) ->
-            ( { model | userid = Just uId }, Cmd.batch [ uId |> Just |> storeToken, load "http://localhost:8000/index.html" ] )
+            ( { model | userid = Just uId }, Cmd.batch [ uId  |> storeToken, load "http://localhost:8000/admin.html" ] )
 
         LoginAttempt (Err message) ->
             ( { model | error = Just (toString message) }, Cmd.none )
@@ -64,21 +64,61 @@ view model =
                 Just error ->
                     error
     in
-    div []
+    div [style [( "background-color", "#D55757" )]]
         [ h3 [] [ text "Register" ]
         , br [] []
-        , input [ onInput SetUserName, placeholder "write your username" ] []
+        , input [ onInput SetUserName, placeholder "write your username",
+                style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " black" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                , ( "width", "70%" )
+                , ( "height", "12px" )
+                ]] []
         , br [] []
-        , input [ onInput SetPassword, placeholder "write your password" ] []
+        , input [ onInput SetPassword, placeholder "write your password"
+                ,style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " black" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                , ( "width", "70%" )
+                , ( "height", "12px" )
+                ]] []
         , br [] []
-        , button [ onClick Login ] [ text "Log In" ]
+        , button [ onClick Login ,
+                 style
+                [ ( "background-color", "white" )
+                , ( "border", "none" )
+                , ( "color", " #D55757" )
+                , ( "padding", "15px 32px" )
+                , ( "text-align", "center" )
+                , ( "text-decoration", "none" )
+                , ( "display", "inline-block" )
+                , ( "font-size", "16px" )
+                , ( "margin", "4px 2px" )
+                , ( "cursor", "pointer" )
+                ]] [ text "Log In" ]
         , div [] [ text message ]
         ]
 
 
 registerCmd : Auth -> Cmd Msg
 registerCmd credential =
-    Http.send LoginAttempt (getApiUsersLogin credential)
+    Http.send LoginAttempt (postApiUsersLogin credential)
 
 
 subscriptions : Model -> Sub Msg
