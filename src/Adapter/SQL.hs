@@ -11,34 +11,36 @@ module Adapter.SQL (countUserByEmail
                      ,getArticle
                      ,getArticles
                      ,deleteArticle
-                     ,connect
-                     ,Connection
                      ) where
 
 
 import            Database.YeshQL
 import            Database.HDBC(commit,run,toSql,disconnect )
-import            Database.HDBC.Sqlite3(connectSqlite3,Connection)
+--import            Database.HDBC.Sqlite3(connectSqlite3,Connection)
 
 import qualified Core.Types as T
 
-connect :: IO Connection
-connect = connectSqlite3 "/Users/lambda/development/blog.db"
 
--- to be removed
-connect1 :: IO Connection
-connect1 = connectSqlite3 "/Users/lambda/development/blog1.db"
 
 --  SQL queries to maipulate users --
 [yesh|
      -- name:createTbArticles::rowcount Int
-     CREATE TABLE "articles" ( `recid` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
-     , `title` TEXT NOT NULL, `body` TEXT NOT NULL, `slug` TEXT, `userid` INTEGER
-     , `tags` TEXT, `createdat` TEXT DEFAULT CURRENT_TIMESTAMP, `modifiedat` TEXT DEFAULT CURRENT_TIMESTAMP )
+     CREATE TABLE IF NOT EXISTS articles (
+      recid  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
+     ,title TEXT NOT NULL
+     ,body TEXT NOT NULL
+     ,slug TEXT
+     ,userid INTEGER
+     ,tags TEXT
+     ,createdat TEXT DEFAULT CURRENT_TIMESTAMP
+     ,modifiedat TEXT DEFAULT CURRENT_TIMESTAMP )
      ;;;
      -- name:createTbUsers :: rowcount Int
-     CREATE TABLE `users` ( `userid` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
-     , `username` TEXT UNIQUE, `email` TEXT UNIQUE, `password` TEXT )
+     CREATE TABLE IF NOT EXISTS users (
+      userid INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE
+     ,username TEXT UNIQUE
+     ,email TEXT UNIQUE
+     ,password TEXT )
 |]
 [yesh|
   -- name:countUserByEmail :: (Int)

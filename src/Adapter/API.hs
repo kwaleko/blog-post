@@ -13,18 +13,20 @@ import Data.Aeson(ToJSON(..)
                  ,(.=))
 import Data.Proxy(Proxy(..))
 import Data.ByteString.Lazy.Char8(pack)
-import Database.HDBC.Sqlite3(Connection)
 import Network.Wai.Handler.Warp (run)
 import Network.Wai.Middleware.Cors
 import Servant.Client
 import Servant.Server
 import Servant.API
+import System.Directory(getHomeDirectory)
+import Database.HDBC.Sqlite3(Connection)
+
 
 import qualified Lib           as L
 import qualified Core.Types    as T
 import qualified Core.Users    as U
 import qualified Core.Articles as A
-import qualified Adapter.SQL   as S
+import qualified Adapter.Sqlite   as S
 
 
 type API
@@ -88,6 +90,7 @@ appAPI = Proxy :: Proxy API
 runServer :: IO ()
 runServer = do
   conn <- S.connect
+  S.migrateDB conn
   run 8001 (app conn)
 
 app conn

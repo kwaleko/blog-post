@@ -1,21 +1,30 @@
-module Adapter.Sqlite where
+module Adapter.Sqlite  where
 
 import qualified Adapter.SQL as S
 import qualified Core.Types  as T
 import qualified Core.Parsing as P
 
 import Control.Monad.Reader
-import Database.HDBC(commit)
+import Database.HDBC(commit,getTables)
 import Database.HDBC.Types(IConnection)
+import Database.HDBC.Sqlite3(connectSqlite3,Connection(..))
+import System.Directory(getHomeDirectory)
+import Data.Monoid((<>))
 
-
-migrateDB :: (MonadIO m,MonadReader r m, IConnection r) => m ()
-migrateDB = do
-  conn <- ask
+-- create users and articles table
+migrateDB :: Connection -> IO ()
+migrateDB conn = do
   liftIO $ S.createTbUsers conn
   liftIO $ S.createTbArticles conn
   liftIO $ commit conn
   return ()
+
+connect :: IO Connection
+connect = do
+  path <- getHomeDirectory
+  let dbPath = path <> "/blog.db"
+  connectSqlite3 dbPath
+
 
 isEmailExists :: (MonadIO m, MonadReader r m, IConnection r ) => T.Email -> m Bool
 isEmailExists email = do
