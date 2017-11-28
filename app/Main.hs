@@ -1,8 +1,11 @@
 module Main where
 
-import Lib
-import Adapter.API
+--import Lib
+import Adapter.API(runAPIServer
+                  ,runStaticServer)
 
 
 main :: IO ()
-main = runServer
+main = do
+  runStaticServer
+  runAPIServer
