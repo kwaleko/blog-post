@@ -14,6 +14,8 @@ import Data.Aeson(ToJSON(..)
 import Data.Proxy(Proxy(..))
 import Data.ByteString.Lazy.Char8(pack)
 import Network.Wai.Handler.Warp (run)
+import Network.Wai.Application.Static(staticApp
+                                     ,defaultWebAppSettings)
 import Network.Wai.Middleware.Cors
 import Servant.Client
 import Servant.Server
@@ -87,8 +89,14 @@ appServer conn =
 appAPI :: Proxy API
 appAPI = Proxy :: Proxy API
 
-runServer :: IO ()
-runServer = do
+runStaticServer :: IO ()
+runStaticServer = do
+  dir <- getHomeDirectory
+  let setting = defaultWebAppSettings dir
+  run 8002 $ staticApp setting
+
+runAPIServer :: IO ()
+runAPIServer = do
   conn <- S.connect
   S.migrateDB conn
   run 8001 (app conn)

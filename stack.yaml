@@ -7,4 +7,6 @@ extra-deps:
 - attoparsec-0.13.2.0
 - yeshql-3.0.1.3
 - servant-elm-0.4.0.1
+- wai-app-static-3.1.6.1
+- directory-1.3.1.5
 resolver: lts-9.9

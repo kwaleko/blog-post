@@ -8,7 +8,7 @@ import Control.Monad.Reader
 import Database.HDBC(commit,getTables)
 import Database.HDBC.Types(IConnection)
 import Database.HDBC.Sqlite3(connectSqlite3,Connection(..))
-import System.Directory(getHomeDirectory)
+--import System.Directory(getHomeDirectory)
 import Data.Monoid((<>))
 
 -- create users and articles table
@@ -21,9 +21,9 @@ migrateDB conn = do
 
 connect :: IO Connection
 connect = do
-  path <- getHomeDirectory
-  let dbPath = path <> "/blog.db"
-  connectSqlite3 dbPath
+  --path <- getHomeDirectory
+  --let dbPath = path <> "/blog.db"
+  connectSqlite3 "/User/lambda" --dbPath
 
 
 isEmailExists :: (MonadIO m, MonadReader r m, IConnection r ) => T.Email -> m Bool
