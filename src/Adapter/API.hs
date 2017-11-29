@@ -20,8 +20,9 @@ import Network.Wai.Middleware.Cors
 import Servant.Client
 import Servant.Server
 import Servant.API
-import System.Directory(getHomeDirectory)
 import Database.HDBC.Sqlite3(Connection)
+import Control.Concurrent.ParallelIO.Global(parallel_)
+import System.Directory(getHomeDirectory,doesDirectoryExist,createDirectory)
 
 
 import qualified Lib           as L
@@ -30,7 +31,9 @@ import qualified Core.Users    as U
 import qualified Core.Articles as A
 import qualified Adapter.Sqlite   as S
 
-
+getHomeDirectory1= getHomeDirectory
+doesDirectoryExist1 =doesDirectoryExist
+createDirectory1 =createDirectory
 type API
    =     "api" :> "users"    :> "register"                    :> ReqBody '[JSON] T.Register      :> Post '[JSON] T.UserId
   :<|>   "api" :> "users"    :> "login"                       :> ReqBody '[JSON] T.Auth          :> Post '[JSON] T.UserId
@@ -99,6 +102,9 @@ runAPIServer dbPath = do
   conn <- S.connect dbPath
   S.migrateDB conn
   run 8001 (app conn)
+
+runServer :: FilePath -> FilePath -> IO ()
+runServer apiPath filePath = parallel_ [runAPIServer apiPath,runStaticServer filePath]
 
 app conn
   = cors ( const $ Just (simpleCorsResourcePolicy  { corsRequestHeaders = ["Content-Type"] }) )
