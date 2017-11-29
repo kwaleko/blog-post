@@ -30,7 +30,7 @@ version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
 bindir     = "/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/bin"
-libdir     = "/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/blog-post-0.1.0.0-JbBQx8tJEi5DWEUxOcYyv3"
+libdir     = "/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/blog-post-0.1.0.0-7vDs7UYTRC65AMqvGPRXQk"
 dynlibdir  = "/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2"
 datadir    = "/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/share/x86_64-osx-ghc-8.0.2/blog-post-0.1.0.0"
 libexecdir = "/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/libexec"

@@ -6,5 +6,5 @@ Preprocessing library wai-logger-2.3.0...
 [3 of 4] Compiling Network.Wai.Logger.Apache ( Network/Wai/Logger/Apache.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/Wai/Logger/Apache.o )
 [4 of 4] Compiling Network.Wai.Logger ( Network/Wai/Logger.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/Wai/Logger.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/wai-logger-2.3.0-Jtw1Yp0NhZlCJGdycL6FGk
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/wai-logger-2.3.0-4mwDWLSMbwIAZPexHveoLw
 Registering wai-logger-2.3.0...

@@ -17,5 +17,5 @@ Preprocessing library optparse-applicative-0.13.2.0...
 [14 of 15] Compiling Options.Applicative ( Options/Applicative.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Options/Applicative.o )
 [15 of 15] Compiling Options.Applicative.Arrows ( Options/Applicative/Arrows.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Options/Applicative/Arrows.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/optparse-applicative-0.13.2.0-6awOQvwMKsZKTbVIFUG5uT
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/optparse-applicative-0.13.2.0-BDN5kcNSx3u9YPiPkxNYsX
 Registering optparse-applicative-0.13.2.0...

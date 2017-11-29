@@ -31,5 +31,5 @@ Preprocessing library http2-1.6.3...
 [28 of 29] Compiling Network.HPACK.HeaderBlock ( Network/HPACK/HeaderBlock.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/HPACK/HeaderBlock.o )
 [29 of 29] Compiling Network.HPACK    ( Network/HPACK.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/HPACK.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/http2-1.6.3-G2RgHl7hQzKCm265L9qn2q
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/http2-1.6.3-5WuWRsIVuKR43Sq9Cs2O4Z
 Registering http2-1.6.3...

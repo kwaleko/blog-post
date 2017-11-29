@@ -174,5 +174,5 @@ cbits/zlib-helper.c:75:9: error:
                    ^~~~~~~~~~~~~~~
 5 warnings generated.
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/streaming-commons-0.1.17-7HR1nLRDlHlEHDAoMTqS0V
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/streaming-commons-0.1.17-A1bxWUi2y0z4Ejfe4yHdmF
 Registering streaming-commons-0.1.17...

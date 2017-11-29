@@ -42,5 +42,5 @@ Preprocessing library warp-3.2.13...
 [39 of 40] Compiling Network.Wai.Handler.Warp.WithApplication ( Network/Wai/Handler/Warp/WithApplication.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/Wai/Handler/Warp/WithApplication.o )
 [40 of 40] Compiling Network.Wai.Handler.Warp ( Network/Wai/Handler/Warp.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/Wai/Handler/Warp.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/warp-3.2.13-GxCY6xQh6q6gQA6azMmhd
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/warp-3.2.13-9MkbJMIG6JHE15I63enGlv
 Registering warp-3.2.13...

@@ -8,5 +8,5 @@ Preprocessing library servant-client-0.11...
 [5 of 6] Compiling Servant.Client   ( src/Servant/Client.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Servant/Client.o )
 [6 of 6] Compiling Servant.Client.Generic ( src/Servant/Client/Generic.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Servant/Client/Generic.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/servant-client-0.11-Ea1VBIatZiKFMHLFU4P5F
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/servant-client-0.11-81qNcTDOgcyAV3GlacBqm5
 Registering servant-client-0.11...

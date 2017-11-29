@@ -17,5 +17,5 @@ Network/HTTP/Date/Converter.hs:61:19: warning: [-Wdeprecations]
     Deprecated: "If you think you know what you are doing, use 'unsafePerformIO'. If you are sure you know what you are doing, use 'unsafeDupablePerformIO'. If you enjoy sharing an address space with a malevolent agent of chaos, try 'accursedUnutterablePerformIO'."
 [5 of 5] Compiling Network.HTTP.Date ( Network/HTTP/Date.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Network/HTTP/Date.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/http-date-0.0.6.1-LCyEVQFMubnEC9pUOVyTm9
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/http-date-0.0.6.1-7OFzvTGDf2i7UhAPOG17o8
 Registering http-date-0.0.6.1...

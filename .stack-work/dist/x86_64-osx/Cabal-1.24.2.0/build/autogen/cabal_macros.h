@@ -49,6 +49,13 @@
   (major1) == 0 && (major2) <  10 || \
   (major1) == 0 && (major2) == 10 && (minor) <= 8)
 
+/* package directory-1.3.1.5 */
+#define VERSION_directory "1.3.1.5"
+#define MIN_VERSION_directory(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  3 || \
+  (major1) == 1 && (major2) == 3 && (minor) <= 1)
+
 /* package elm-export-0.6.0.1 */
 #define VERSION_elm_export "0.6.0.1"
 #define MIN_VERSION_elm_export(major1,major2,minor) (\
@@ -62,6 +69,13 @@
   (major1) <  2 || \
   (major1) == 2 && (major2) <  2 || \
   (major1) == 2 && (major2) == 2 && (minor) <= 1)
+
+/* package parallel-io-0.3.3 */
+#define VERSION_parallel_io "0.3.3"
+#define MIN_VERSION_parallel_io(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  3 || \
+  (major1) == 0 && (major2) == 3 && (minor) <= 3)
 
 /* package servant-0.11 */
 #define VERSION_servant "0.11"
@@ -77,6 +91,13 @@
   (major1) == 0 && (major2) <  11 || \
   (major1) == 0 && (major2) == 11 && (minor) <= 0)
 
+/* package servant-elm-0.4.0.1 */
+#define VERSION_servant_elm "0.4.0.1"
+#define MIN_VERSION_servant_elm(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  4 || \
+  (major1) == 0 && (major2) == 4 && (minor) <= 0)
+
 /* package servant-server-0.11 */
 #define VERSION_servant_server "0.11"
 #define MIN_VERSION_servant_server(major1,major2,minor) (\
@@ -90,6 +111,27 @@
   (major1) <  1 || \
   (major1) == 1 && (major2) <  2 || \
   (major1) == 1 && (major2) == 2 && (minor) <= 2)
+
+/* package wai-app-static-3.1.6.1 */
+#define VERSION_wai_app_static "3.1.6.1"
+#define MIN_VERSION_wai_app_static(major1,major2,minor) (\
+  (major1) <  3 || \
+  (major1) == 3 && (major2) <  1 || \
+  (major1) == 3 && (major2) == 1 && (minor) <= 6)
+
+/* package wai-cors-0.2.5 */
+#define VERSION_wai_cors "0.2.5"
+#define MIN_VERSION_wai_cors(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  2 || \
+  (major1) == 0 && (major2) == 2 && (minor) <= 5)
+
+/* package warp-3.2.13 */
+#define VERSION_warp "3.2.13"
+#define MIN_VERSION_warp(major1,major2,minor) (\
+  (major1) <  3 || \
+  (major1) == 3 && (major2) <  2 || \
+  (major1) == 3 && (major2) == 2 && (minor) <= 13)
 
 /* package yeshql-3.0.1.3 */
 #define VERSION_yeshql "3.0.1.3"
@@ -168,7 +210,7 @@
   (major1) == 0 && (major2) <  29 || \
   (major1) == 0 && (major2) == 29 && (minor) <= 2)
 
-#define CURRENT_COMPONENT_ID "blog-post-0.1.0.0-JbBQx8tJEi5DWEUxOcYyv3"
+#define CURRENT_COMPONENT_ID "blog-post-0.1.0.0-7vDs7UYTRC65AMqvGPRXQk"
 
-#define CURRENT_PACKAGE_KEY "blog-post-0.1.0.0-JbBQx8tJEi5DWEUxOcYyv3"
+#define CURRENT_PACKAGE_KEY "blog-post-0.1.0.0-7vDs7UYTRC65AMqvGPRXQk"
 

@@ -16,5 +16,5 @@ System/EasyFile/Directory.hs:37:1: warning: [-Wunused-imports]
     To import instances alone, use: import Control.Applicative()
 [4 of 4] Compiling System.EasyFile  ( System/EasyFile.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/System/EasyFile.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/easy-file-0.2.1-EF75kT9IffSEtMhJR8O0lO
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/easy-file-0.2.1-F2dDiTF7YOy8X4nUuhkgnO
 Registering easy-file-0.2.1...

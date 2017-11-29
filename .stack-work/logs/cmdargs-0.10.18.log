@@ -27,5 +27,5 @@ Preprocessing library cmdargs-0.10.18...
 [24 of 25] Compiling System.Console.CmdArgs ( System/Console/CmdArgs.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/System/Console/CmdArgs.o )
 [25 of 25] Compiling System.Console.CmdArgs.Quote ( System/Console/CmdArgs/Quote.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/System/Console/CmdArgs/Quote.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/cmdargs-0.10.18-5lPooVsFBdMGZOeIRKPF9t
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/cmdargs-0.10.18-3eLc3sZeMeNJytEyy9AkTH
 Registering cmdargs-0.10.18...

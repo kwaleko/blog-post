@@ -88,5 +88,5 @@ Preprocessing library Cabal-1.24.2.0...
 [85 of 86] Compiling Distribution.Simple.Haddock ( Distribution/Simple/Haddock.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Distribution/Simple/Haddock.o )
 [86 of 86] Compiling Distribution.Simple ( Distribution/Simple.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Distribution/Simple.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/Cabal-1.24.2.0-GfQk6EhGMHh2xEdLK4ilrK
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/Cabal-1.24.2.0-LNCCMDSYLIWIHFcGlhEmTY
 Registering Cabal-1.24.2.0...

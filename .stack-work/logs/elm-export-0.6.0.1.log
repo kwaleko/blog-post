@@ -29,5 +29,5 @@ src/Elm/Encoder.hs:42:3: warning: [-Wincomplete-patterns]
 [6 of 7] Compiling Elm.Record       ( src/Elm/Record.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm/Record.o )
 [7 of 7] Compiling Elm              ( src/Elm.hs, .stack-work/dist/x86_64-osx/Cabal-1.24.2.0/build/Elm.o )
 Installing library in
-/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/elm-export-0.6.0.1-ApVNAICmooMHAFz6rP1Y4P
+/Users/lambda/development/blog-post/.stack-work/install/x86_64-osx/lts-9.9/8.0.2/lib/x86_64-osx-ghc-8.0.2/elm-export-0.6.0.1-CxdaWTgbkf5GvirbnYkFfc
 Registering elm-export-0.6.0.1...
