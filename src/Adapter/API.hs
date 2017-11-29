@@ -89,15 +89,14 @@ appServer conn =
 appAPI :: Proxy API
 appAPI = Proxy :: Proxy API
 
-runStaticServer :: IO ()
-runStaticServer = do
-  dir <- getHomeDirectory
-  let setting = defaultWebAppSettings dir
+runStaticServer :: FilePath -> IO ()
+runStaticServer filesPath = do
+  let setting = defaultWebAppSettings filesPath
   run 8002 $ staticApp setting
 
-runAPIServer :: IO ()
-runAPIServer = do
-  conn <- S.connect
+runAPIServer :: FilePath -> IO ()
+runAPIServer dbPath = do
+  conn <- S.connect dbPath
   S.migrateDB conn
   run 8001 (app conn)
 

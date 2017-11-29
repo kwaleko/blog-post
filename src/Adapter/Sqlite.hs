@@ -19,12 +19,8 @@ migrateDB conn = do
   liftIO $ commit conn
   return ()
 
-connect :: IO Connection
-connect = do
-  --path <- getHomeDirectory
-  --let dbPath = path <> "/blog.db"
-  connectSqlite3 "/User/lambda" --dbPath
-
+connect :: FilePath ->IO Connection
+connect  = connectSqlite3
 
 isEmailExists :: (MonadIO m, MonadReader r m, IConnection r ) => T.Email -> m Bool
 isEmailExists email = do
