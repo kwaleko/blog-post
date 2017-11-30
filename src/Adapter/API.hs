@@ -21,7 +21,7 @@ import Servant.Client
 import Servant.Server
 import Servant.API
 import Database.HDBC.Sqlite3(Connection)
-import Control.Concurrent.ParallelIO.Global(parallel_)
+import Control.Concurrent.Async(race_)
 import System.Directory(getHomeDirectory,doesDirectoryExist,createDirectory)
 
 
@@ -95,7 +95,7 @@ appAPI = Proxy :: Proxy API
 runStaticServer :: FilePath -> IO ()
 runStaticServer filesPath = do
   let setting = defaultWebAppSettings filesPath
-  run 8002 $ staticApp setting
+  run 80 $ staticApp setting
 
 runAPIServer :: FilePath -> IO ()
 runAPIServer dbPath = do
@@ -104,7 +104,7 @@ runAPIServer dbPath = do
   run 8001 (app conn)
 
 runServer :: FilePath -> FilePath -> IO ()
-runServer apiPath filePath = parallel_ [runAPIServer apiPath,runStaticServer filePath]
+runServer apiPath filePath = race_  (runAPIServer apiPath) (runStaticServer filePath)
 
 app conn
   = cors ( const $ Just (simpleCorsResourcePolicy  { corsRequestHeaders = ["Content-Type"] }) )
