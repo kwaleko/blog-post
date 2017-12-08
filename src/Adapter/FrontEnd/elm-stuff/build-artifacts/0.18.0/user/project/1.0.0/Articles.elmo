@@ -1,18 +1,22 @@
 var _user$project$Articles$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Articles$convert = function (_p0) {
+var _user$project$Articles$convert1 = function (_p0) {
 	var _p1 = _p0;
-	var _p3 = _p1._0;
-	var _p2 = _p1._1;
-	switch (_p2) {
+	return _elm_lang$html$Html$text(_p1._0);
+};
+var _user$project$Articles$convert = function (_p2) {
+	var _p3 = _p2;
+	var _p5 = _p3._0;
+	var _p4 = _p3._1;
+	switch (_p4) {
 		case 'Bold':
 			return A2(
 				_elm_lang$html$Html$strong,
 				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(_p3),
+					_0: _elm_lang$html$Html$text(_p5),
 					_1: {ctor: '[]'}
 				});
 		case 'Italic':
@@ -21,7 +25,7 @@ var _user$project$Articles$convert = function (_p0) {
 				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(_p3),
+					_0: _elm_lang$html$Html$text(_p5),
 					_1: {ctor: '[]'}
 				});
 		case 'Heading':
@@ -30,7 +34,7 @@ var _user$project$Articles$convert = function (_p0) {
 				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(_p3),
+					_0: _elm_lang$html$Html$text(_p5),
 					_1: {ctor: '[]'}
 				});
 		case 'Mark':
@@ -48,7 +52,7 @@ var _user$project$Articles$convert = function (_p0) {
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(_p3),
+					_0: _elm_lang$html$Html$text(_p5),
 					_1: {ctor: '[]'}
 				});
 		case 'Code':
@@ -75,13 +79,13 @@ var _user$project$Articles$convert = function (_p0) {
 						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(_p3),
+							_0: _elm_lang$html$Html$text(_p5),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
 				});
 		default:
-			return _elm_lang$html$Html$text(_p3);
+			return _elm_lang$html$Html$text(_p5);
 	}
 };
 var _user$project$Articles$tagsToHtml = function (tags) {
@@ -150,13 +154,61 @@ var _user$project$Articles$navBar = A2(
 					{
 						ctor: '::',
 						_0: {ctor: '_Tuple2', _0: 'float', _1: 'left'},
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '3vw'},
+							_1: {ctor: '[]'}
+						}
 					}),
 				_1: {ctor: '[]'}
 			},
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html$text('Khaled Omar'),
+				_0: A2(
+					_elm_lang$html$Html$a,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$href('#'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$style(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'color', _1: '#FFFFFF'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'none'},
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$li,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$style(
+									{
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'padding', _1: '10px'},
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('HOME'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}),
 				_1: {ctor: '[]'}
 			}),
 		_1: {
@@ -237,7 +289,7 @@ var _user$project$Articles$navBar = A2(
 										},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('HOME'),
+											_0: _elm_lang$html$Html$text('RESUME'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {ctor: '[]'}
@@ -276,7 +328,7 @@ var _user$project$Articles$navBar = A2(
 														_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline'},
 														_1: {
 															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'padding', _1: '10px'},
+															_0: {ctor: '_Tuple2', _0: 'padding', _1: '5px'},
 															_1: {ctor: '[]'}
 														}
 													}),
@@ -284,60 +336,12 @@ var _user$project$Articles$navBar = A2(
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('RESUME'),
+												_0: _elm_lang$html$Html$text('CONTACT'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
 									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$a,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$href('#'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$style(
-													{
-														ctor: '::',
-														_0: {ctor: '_Tuple2', _0: 'color', _1: '#FFFFFF'},
-														_1: {
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'none'},
-															_1: {ctor: '[]'}
-														}
-													}),
-												_1: {ctor: '[]'}
-											}
-										},
-										{
-											ctor: '::',
-											_0: A2(
-												_elm_lang$html$Html$li,
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$style(
-														{
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline'},
-															_1: {
-																ctor: '::',
-																_0: {ctor: '_Tuple2', _0: 'padding', _1: '5px'},
-																_1: {ctor: '[]'}
-															}
-														}),
-													_1: {ctor: '[]'}
-												},
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html$text('CONTACT'),
-													_1: {ctor: '[]'}
-												}),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}
 						}),
 					_1: {ctor: '[]'}
@@ -366,39 +370,39 @@ var _user$project$Articles$getArticleBySlugCmd = function (slug) {
 };
 var _user$project$Articles$update = F2(
 	function (msg, model) {
-		var _p4 = msg;
-		switch (_p4.ctor) {
+		var _p6 = msg;
+		switch (_p6.ctor) {
 			case 'GetArticleBySlug':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
-					_1: _user$project$Articles$getArticleBySlugCmd(_p4._0)
+					_1: _user$project$Articles$getArticleBySlugCmd(_p6._0)
 				};
 			case 'OneArticleRetrived':
-				if (_p4._0.ctor === 'Ok') {
+				if (_p6._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: _user$project$Articles$OneArticle(_p4._0._0),
+						_0: _user$project$Articles$OneArticle(_p6._0._0),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {
 						ctor: '_Tuple2',
-						_0: _user$project$Articles$Error(_p4._0._0),
+						_0: _user$project$Articles$Error(_p6._0._0),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
 			default:
-				if (_p4._0.ctor === 'Ok') {
+				if (_p6._0.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
-						_0: _user$project$Articles$ListArticles(_p4._0._0),
+						_0: _user$project$Articles$ListArticles(_p6._0._0),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {
 						ctor: '_Tuple2',
-						_0: _user$project$Articles$Error(_p4._0._0),
+						_0: _user$project$Articles$Error(_p6._0._0),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
@@ -420,14 +424,22 @@ var _user$project$Articles$articleTitleToHtml = function (article) {
 			_0: _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'Verdana'},
+					_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'Mustache Script,Verdana'},
 					_1: {
 						ctor: '::',
 						_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'bold'},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '1vw'},
-							_1: {ctor: '[]'}
+							_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '20vw'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'margin-right', _1: '20vw'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'line-height', _1: '1.7em'},
+									_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				}),
@@ -585,7 +597,25 @@ var _user$project$Articles$articleTitleToHtml = function (article) {
 						_elm_lang$html$Html$br,
 						{ctor: '[]'},
 						{ctor: '[]'}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$tr,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$td,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$colspan(2),
+										_1: {ctor: '[]'}
+									},
+									A2(_elm_lang$core$List$map, _user$project$Articles$convert1, article.parsedArticle)),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		});
@@ -633,11 +663,15 @@ var _user$project$Articles$articleToHtml = function (article) {
 									_0: {ctor: '_Tuple2', _0: 'text-decoration', _1: 'bold'},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'width', _1: '50%'},
+										_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '18vw'},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'float', _1: 'center'},
-											_1: {ctor: '[]'}
+											_0: {ctor: '_Tuple2', _0: 'margin-right', _1: '18vw'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'line-height', _1: '1.7em'},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -813,16 +847,7 @@ var _user$project$Articles$articleToHtml = function (article) {
 											ctor: '::',
 											_0: A2(
 												_elm_lang$html$Html$div,
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$style(
-														{
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '1vw'},
-															_1: {ctor: '[]'}
-														}),
-													_1: {ctor: '[]'}
-												},
+												{ctor: '[]'},
 												A2(_elm_lang$core$List$map, _user$project$Articles$convert, article.parsedArticle)),
 											_1: {ctor: '[]'}
 										}),
@@ -836,8 +861,8 @@ var _user$project$Articles$articleToHtml = function (article) {
 		});
 };
 var _user$project$Articles$view = function (model) {
-	var _p5 = model;
-	switch (_p5.ctor) {
+	var _p7 = model;
+	switch (_p7.ctor) {
 		case 'Error':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -862,7 +887,7 @@ var _user$project$Articles$view = function (model) {
 				{
 					ctor: '::',
 					_0: _elm_lang$html$Html$text(
-						_elm_lang$core$Basics$toString(_p5._0)),
+						_elm_lang$core$Basics$toString(_p7._0)),
 					_1: {ctor: '[]'}
 				});
 		case 'ListArticles':
@@ -894,7 +919,7 @@ var _user$project$Articles$view = function (model) {
 						_0: A2(
 							_elm_lang$html$Html$div,
 							{ctor: '[]'},
-							_user$project$Articles$posts(_p5._0)),
+							_user$project$Articles$posts(_p7._0)),
 						_1: {ctor: '[]'}
 					}
 				});
@@ -924,7 +949,7 @@ var _user$project$Articles$view = function (model) {
 					_0: _user$project$Articles$navBar,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Articles$articleToHtml(_p5._0),
+						_0: _user$project$Articles$articleToHtml(_p7._0),
 						_1: {ctor: '[]'}
 					}
 				});

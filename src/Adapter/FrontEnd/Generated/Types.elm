@@ -98,7 +98,7 @@ postApiUsersRegister body =
             []
         , url =
             String.join "/"
-                [ "http://localhost:8001"
+                [ "http://172.104.229.76:8001"
                 , "api"
                 , "users"
                 , "register"
@@ -146,7 +146,7 @@ postApiArticlesByUserid capture_userid body =
             []
         , url =
             String.join "/"
-                [ "http://localhost:8001"
+                [ "http://172.104.229.76:8001"
                 , "api"
                 , "articles"
                 , capture_userid |> toString |> Http.encodeUri
@@ -170,7 +170,7 @@ getApiArticlesBySlug capture_slug =
             []
         , url =
             String.join "/"
-                [ "http://localhost:8001"
+                [ "http://172.104.229.76:8001"
                 , "api"
                 , "articles"
                 , capture_slug |> Http.encodeUri
@@ -218,7 +218,7 @@ getApiArticles =
             []
         , url =
             String.join "/"
-                [ "http://localhost:8001"
+                [ "http://172.104.229.76:8001"
                 , "api"
                 , "articles"
                 ]

@@ -85,8 +85,9 @@ navBar =
             , ( "color", "#FFFFFF" )
             ]
         ]
-        [ div [ style [ ( "float", "left" ) ] ]
-            [ text "Khaled Omar"
+        [ div [ style [ ( "float", "left" ),("margin-left","3vw") ] ]
+            [ a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
+                    [ li [ style [ ( "display", "inline" ), ( "padding", "10px" ) ] ] [ text "HOME" ] ]
             ]
         , div [ style [ ( "float", "right" ) ] ]
             [ ul
@@ -96,9 +97,8 @@ navBar =
                     , ( "list-style-type", "none" )
                     ]
                 ]
-                [ a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
-                    [ li [ style [ ( "display", "inline" ), ( "padding", "10px" ) ] ] [ text "HOME" ] ]
-                , a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
+                [
+                 a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
                     [ li [ style [ ( "display", "inline" ), ( "padding", "10px" ) ] ] [ text "RESUME" ] ]
                 , a [ href "#", style [ ( "color", "#FFFFFF" ), ( "text-decoration", "none" ) ] ]
                     [ li [ style [ ( "display", "inline" ), ( "padding", "5px" ) ] ] [ text "CONTACT" ] ]
@@ -116,9 +116,11 @@ articleTitleToHtml : Article -> Html Msg
 articleTitleToHtml article =
     table
         [ style
-            [ ( "font-family", "Verdana" )
+            [ ( "font-family", "Mustache Script,Verdana" )
             , ( "text-decoration", "bold" )
-            , ( "margin-left", "1vw" )
+            , ( "margin-left", "20vw" )
+            , ("margin-right","20vw")
+            , ("line-height","1.7em")
             ]
         ]
         [ tr []
@@ -157,6 +159,11 @@ articleTitleToHtml article =
                 ]
             ]
         , br [] []
+        ,tr []
+            [
+             td [ colspan 2]
+                 (List.map convert1 article.parsedArticle)
+            ]
         ]
 
 
@@ -173,8 +180,11 @@ articleToHtml article =
                 [ ( "font-family", "Verdana" )
                 , ( "align", "center" )
                 , ( "text-decoration", "bold" )
-                , ( "width", "50%" )
-                , ( "float", "center" )
+              --   , ( "width", "50%" )
+                -- , ( "float", "center" )
+               , ( "margin-left", "18vw" )
+            , ("margin-right","18vw")
+            , ("line-height","1.7em")
                 ]
             ]
             [ tr []
@@ -215,7 +225,7 @@ articleToHtml article =
                 ]
             , tr []
                 [ td [ colspan 3 ]
-                    [ div [style [("margin-left","1vw")]] (List.map convert article.parsedArticle)
+                    [ div [] (List.map convert article.parsedArticle)
                     ]
                 ]
             ]
@@ -245,6 +255,10 @@ convert ( txt, style1 ) =
 
         _ ->
             text txt
+
+
+convert1 : ( String, String ) -> Html a
+convert1 ( txt, style1 ) = text txt
 
 
 getArticlesCmd : Cmd Msg

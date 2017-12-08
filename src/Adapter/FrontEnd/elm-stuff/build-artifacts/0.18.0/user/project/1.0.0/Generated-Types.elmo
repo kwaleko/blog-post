@@ -131,7 +131,7 @@ var _user$project$Generated_Types$postApiUsersRegister = function (body) {
 				'/',
 				{
 					ctor: '::',
-					_0: 'http://localhost:8001',
+					_0: 'http://172.104.229.76:8001',
 					_1: {
 						ctor: '::',
 						_0: 'api',
@@ -213,7 +213,7 @@ var _user$project$Generated_Types$postApiArticlesByUserid = F2(
 					'/',
 					{
 						ctor: '::',
-						_0: 'http://localhost:8001',
+						_0: 'http://172.104.229.76:8001',
 						_1: {
 							ctor: '::',
 							_0: 'api',
@@ -246,7 +246,7 @@ var _user$project$Generated_Types$getApiArticlesBySlug = function (capture_slug)
 				'/',
 				{
 					ctor: '::',
-					_0: 'http://localhost:8001',
+					_0: 'http://172.104.229.76:8001',
 					_1: {
 						ctor: '::',
 						_0: 'api',
@@ -276,7 +276,7 @@ var _user$project$Generated_Types$getApiArticles = _elm_lang$http$Http$request(
 			'/',
 			{
 				ctor: '::',
-				_0: 'http://localhost:8001',
+				_0: 'http://172.104.229.76:8001',
 				_1: {
 					ctor: '::',
 					_0: 'api',

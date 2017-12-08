@@ -84,7 +84,7 @@ import qualified Core.Types as T
      SELECT COUNT(recid) FROM articles WHERE recid= :userId and slug= :slug
      ;;;
      --name:getArticles :: [(String,String,String,String,String,String)]
-     SELECT title,body,slug,userid,createdat,modifiedat FROM articles
+     SELECT title,body,slug,userid,createdat,modifiedat,tags FROM articles
      ;;;
      --name:getArticle :: (String,String,String,String,String,String)
      -- :slug :: String

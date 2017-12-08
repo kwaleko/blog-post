@@ -92,3 +92,22 @@ data Style
   | Mark
   | Code
   deriving(Eq,Show,Generic)
+
+data Config = Config
+  { cfNetwork :: NetworkConfig
+  , cfLocal :: DirConfig
+  } deriving (Eq, Show)
+
+data NetworkConfig = NetworkConfig
+  { netHost :: String
+  , netStaticPort :: Int
+  , netApiPort :: Int
+  , netDbName :: String
+  }deriving (Eq,Show)
+
+
+data DirConfig = DirConfig
+  {dirRoot :: String
+  ,dirStaticF :: String
+  ,dirDb :: String
+  } deriving (Eq,Show)

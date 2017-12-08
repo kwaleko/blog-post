@@ -21,7 +21,6 @@ import Network.Wai.Middleware.Cors
 -- import Servant.Client
 --import Servant.Server
 import Servant.API
-import Data.Ini.Config
 import Database.HDBC.Sqlite3(Connection)
 import Control.Concurrent.Async(race_)
 import System.Directory(getHomeDirectory,doesDirectoryExist,createDirectory)
@@ -105,40 +104,28 @@ runAPIServer dbPath = do
   conn <- S.connect dbPath
   S.migrateDB conn
   run 8001 (app conn)
+------------------------------- worksapece --------------
+
+fn :: Request -> Bool
+fn _ = False
+
+dispatch :: (Request -> Bool) -> Application -> Application -> Application
+dispatch isMatch appYes appNo request respond =
+    if isMatch request then
+        appYes request respond
+    else
+        appNo request respond
+
+runServer' :: Application -> IO ()
+runServer' = undefined
 
 runServer :: FilePath -> FilePath -> IO ()
-runServer apiPath filePath =
-  if filePath == "" then let newfilePath = "articles.html" in () else let newfilePath = filePath in ()
-  race_  (runAPIServer apiPath) (runStaticServer filePath)
+runServer apiPath filePath = race_  (runAPIServer apiPath) (runStaticServer filePath)
 
 app conn
   = cors ( const $ Just (simpleCorsResourcePolicy  { corsRequestHeaders = ["Content-Type"] }) )
          (serve appAPI (appServer conn))
--- putting code that parse the config file here does not make sense
--- further more this make me feel its a spaghetti code ( omg I miss eating spaghetti)
--- however the below parsing code should be removed as soon as I solve the structuring problem
-configParser :: IniParser Config
-configParser = do
-  netCf <- section "SERVER" $ do
-    host <- fieldOf "host" string
-    sPort <- fieldOf "staticPort" number
-    aPort <- fieldOf "apiPort" number
-    dbName <- fieldOf "dbName" string
-    return NetworkConfig { netHost = host
-                         , netStaticPort = sPort
-                         , netApiPort = aPort
-                         , netDbName = dbName }
-  locCf <- sectionMb "LOCAL" $ do
-    rootP <- fieldOf "rootPath" string
-    staticP <- fieldOf "staticPath" string
-    dbP <- fieldOf "databasePath" string
-    return DirConfig { dirRoot = rootP
-                     , dirStaticF = staticP
-                     , dirDb = dpP}
-  return Config { cfNetwork = netCf, cfLocal = locCf }
 
-
--- end of code
 instance FromJSON T.Register
 instance FromJSON T.Auth
 instance FromJSON T.CreateArticle

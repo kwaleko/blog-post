@@ -90,7 +90,7 @@ findArticles = do
   case articles of
     [] -> return []
     articles -> return $ map sqlToArticle articles
-s
+
 isArticleOwnedByUser :: (MonadIO m,MonadReader r m,IConnection r) => T.UserId -> T.Slug -> m (Maybe Bool)
 isArticleOwnedByUser uId slug = do
   conn <- ask
